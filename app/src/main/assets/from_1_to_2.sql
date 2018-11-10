@@ -1,0 +1,2 @@
+ALTER TABLE GivenPresents
+ADD Sent INTEGER;

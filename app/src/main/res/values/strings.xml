@@ -1,0 +1,59 @@
+<resources>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!-- Menu bar icon titles -->
+    <string name="action_search">Search</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_done">Done</string>
+    <string name="action_members">Members</string>
+
+    <!-- Activity titles - changed programmatically -->
+    <string name="title_activity_recipient_view">RecipientViewActivity</string>
+    <string name="title_activity_family_view">FamilyViewActivity</string>
+    <string name="title_activity_add_given_present">Add present</string>
+
+    <!-- Text for views to show when no data -->
+    <string name="no_names">No names added</string>
+    <string name="no_presents">No presents to show</string>
+
+
+    <!-- Search bar hint -->
+    <string name="search_hint">Search names...</string>
+
+    <!-- EditText hints -->
+    <string name="hint_present">Present</string>
+    <string name="hint_notes">Notes:</string>
+    <string name="hint_recipient_name">Recipient Name</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_family">Family</string>
+
+    <!-- Checkbox label -->
+    <string name="checkbox_bought">Bought</string>
+    <string name="checkbox_sent">Sent</string>
+
+    <!-- Radio button labels -->
+    <string name="radio_family">Family</string>
+    <string name="radio_name">Name</string>
+
+    <!-- Dialog buttons -->
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_done">Done</string>
+    <!-- For confirm dialogs -->
+    <string name="dialog_delete">Delete</string>
+    <string name="dialog_add_anyway">Add anyway</string>
+    <string name="dialog_view_family">View family</string>
+
+    <!-- Dialog titles -->
+    <string name="dialog_title_sort_names_by">View by:</string>
+
+    <!-- Shared preferences keys -->
+    <string name="key_sort_names_by">key_sort_names_by</string>
+</resources>
