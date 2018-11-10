@@ -307,7 +307,18 @@ public class MainActivity extends AppCompatActivity
         tvExportDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO confirmation dialog
                 exportDB();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        TextView tvImportDb = dialogView.findViewById(R.id.import_db);
+        tvImportDb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO confirmation dialog
+                importDB();
                 bottomSheetDialog.dismiss();
             }
         });
@@ -322,6 +333,13 @@ public class MainActivity extends AppCompatActivity
         DBHandler dbHandler = new DBHandler(this);
         boolean result = dbHandler.exportDB();
         Toast.makeText(this, result ? "Success" : "Error exporting database",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private void importDB() {
+        DBHandler dbHandler = new DBHandler(this);
+        boolean result = dbHandler.importDB();
+        Toast.makeText(this, result ? "Success" : "Error importing database",
                 Toast.LENGTH_SHORT).show();
     }
 

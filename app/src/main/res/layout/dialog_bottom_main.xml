@@ -42,12 +42,37 @@
                 android:layout_margin="@dimen/radio_vertical_margin"/>
         </RadioGroup>
 
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"
+            android:layout_below="@id/radio_sort_by"/>
+
         <TextView
             android:id="@+id/export_db"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/export_db"
-            android:layout_below="@id/radio_sort_by"
+            android:layout_below="@id/divider1"
+            android:layout_alignParentLeft="true"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:textSize="18sp"/>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"
+            android:layout_below="@id/export_db"/>
+
+        <TextView
+            android:id="@+id/import_db"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/import_db"
+            android:layout_below="@id/divider2"
             android:layout_alignParentLeft="true"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
