@@ -160,6 +160,7 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+    // export db to file
     public boolean exportDB() {
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
@@ -179,7 +180,29 @@ public class DBHandler extends SQLiteOpenHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
+    }
 
+    // import db from file
+    public boolean importDB() {
+        File sd = Environment.getExternalStorageDirectory();
+        File data = Environment.getDataDirectory();
+        FileChannel source = null;
+        FileChannel destination = null;
+        String currentDBPath = "/data/" + BuildConfig.APPLICATION_ID + "/databases/" + DATABASE_NAME;
+        String backupDBPath = "Download/" + DATABASE_NAME;
+        File currentDB = new File(data, currentDBPath);
+        File backupDB = new File(sd, backupDBPath);
+        try {
+            source = new FileInputStream(backupDB).getChannel();
+            destination = new FileOutputStream(currentDB).getChannel();
+            destination.transferFrom(source, 0, source.size());
+            source.close();
+            destination.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
