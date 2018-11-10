@@ -165,22 +165,21 @@ public class DBHandler extends SQLiteOpenHelper {
         File data = Environment.getDataDirectory();
         FileChannel source = null;
         FileChannel destination = null;
-        String currentDBPath = "/data/" + this.getClass().getPackage().toString() + "/databases/" + DATABASE_NAME;
-        String backupDBPath = DATABASE_NAME;
+        String currentDBPath = "/data/" + BuildConfig.APPLICATION_ID + "/databases/" + DATABASE_NAME;
+        String backupDBPath = "Download/" + DATABASE_NAME;
         File currentDB = new File(data, currentDBPath);
         File backupDB = new File(sd, backupDBPath);
-        if (sd.canWrite()) {
-            try {
-                source = new FileInputStream(currentDB).getChannel();
-                destination = new FileOutputStream(backupDB).getChannel();
-                destination.transferFrom(source, 0, source.size());
-                source.close();
-                destination.close();
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            source = new FileInputStream(currentDB).getChannel();
+            destination = new FileOutputStream(backupDB).getChannel();
+            destination.transferFrom(source, 0, source.size());
+            source.close();
+            destination.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         return false;
     }
 

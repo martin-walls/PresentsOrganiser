@@ -4,49 +4,54 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/tv_sort_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_title_sort_names_by"
+            android:layout_alignParentLeft="true"
+            android:paddingBottom="16dp"
+            android:textSize="18sp"/>
+
+        <RadioGroup
+            android:id="@+id/radio_sort_by"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:orientation="vertical"
+            android:layout_below="@id/tv_sort_by">
 
-            <TextView
-                android:id="@+id/tv_sort_by"
+            <RadioButton
+                android:id="@+id/radio_family"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dialog_title_sort_names_by"
-                android:layout_alignParentLeft="true"
-                android:paddingRight="16dp"
-                android:paddingBottom="16dp"
-                android:textSize="18sp"/>
+                android:text="@string/radio_family"
+                android:textSize="16sp"
+                android:layout_margin="@dimen/radio_vertical_margin"/>
 
-            <RadioGroup
-                android:id="@+id/radio_sort_by"
-                android:layout_width="match_parent"
+            <RadioButton
+                android:id="@+id/radio_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@id/tv_sort_by">
+                android:text="@string/radio_name"
+                android:textSize="16sp"
+                android:layout_margin="@dimen/radio_vertical_margin"/>
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radio_family"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/radio_family"
-                    android:textSize="16sp"
-                    android:layout_margin="@dimen/radio_vertical_margin"/>
+        <TextView
+            android:id="@+id/export_db"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/export_db"
+            android:layout_below="@id/radio_sort_by"
+            android:layout_alignParentLeft="true"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:textSize="18sp"/>
 
-                <RadioButton
-                    android:id="@+id/radio_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/radio_name"
-                    android:textSize="16sp"
-                    android:layout_margin="@dimen/radio_vertical_margin"/>
-            </RadioGroup>
-        </RelativeLayout>
-    </LinearLayout>
-
+    </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -301,9 +302,27 @@ public class MainActivity extends AppCompatActivity
                 bottomSheetDialog.dismiss();
             }
         });
+
+        TextView tvExportDb = dialogView.findViewById(R.id.export_db);
+        tvExportDb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exportDB();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+
         bottomSheetDialog.setContentView(dialogView);
 
         bottomSheetDialog.show();
+    }
+
+    private void exportDB() {
+        DBHandler dbHandler = new DBHandler(this);
+        boolean result = dbHandler.exportDB();
+        Toast.makeText(this, result ? "Success" : "Error exporting database",
+                Toast.LENGTH_SHORT).show();
     }
 
     private void addNameDialog(final View view) {

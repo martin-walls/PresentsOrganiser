@@ -54,6 +54,9 @@
     <!-- Dialog titles -->
     <string name="dialog_title_sort_names_by">View by:</string>
 
+    <!-- settings options -->
+    <string name="export_db">Export database</string>
+
     <!-- Shared preferences keys -->
     <string name="key_sort_names_by">key_sort_names_by</string>
 </resources>
