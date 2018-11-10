@@ -195,11 +195,13 @@ public class DBHandler extends SQLiteOpenHelper {
         File backupDB = new File(sd, backupDBPath);
         try {
             source = new FileInputStream(backupDB).getChannel();
-            destination = new FileOutputStream(currentDB).getChannel();
-            destination.transferFrom(source, 0, source.size());
-            source.close();
-            destination.close();
-            return true;
+            if (currentDB.delete()){
+                destination = new FileOutputStream(currentDB).getChannel();
+                destination.transferFrom(source, 0, source.size());
+                source.close();
+                destination.close();
+                return true;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

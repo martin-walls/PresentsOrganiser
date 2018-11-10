@@ -320,6 +320,7 @@ public class MainActivity extends AppCompatActivity
                 //TODO confirmation dialog
                 importDB();
                 bottomSheetDialog.dismiss();
+                loadData();
             }
         });
 
