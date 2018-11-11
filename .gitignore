@@ -10,5 +10,5 @@
 /build
 /captures
 .externalNativeBuild
-public  
- 
+/public
+/graphics
