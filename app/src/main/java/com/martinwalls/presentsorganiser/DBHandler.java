@@ -160,6 +160,7 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+    //TODO prompt for permission if not given
     // export db to file
     public boolean exportDB() {
         File sd = Environment.getExternalStorageDirectory();

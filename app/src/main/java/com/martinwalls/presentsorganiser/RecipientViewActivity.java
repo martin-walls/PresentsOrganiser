@@ -28,6 +28,7 @@ import java.util.List;
 
 //TODO add events to add presents for -- xmas / bday -- dropdown? -- new db col?
 //TODO option to add to family / change family
+//TODO text wrapping names
 
 public class RecipientViewActivity extends AppCompatActivity
     // handles positive click on add present dialog
