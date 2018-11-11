@@ -50,6 +50,7 @@
     <string name="dialog_delete">Delete</string>
     <string name="dialog_add_anyway">Add anyway</string>
     <string name="dialog_view_family">View family</string>
+    <string name="dialog_continue">Continue</string>
 
     <!-- Dialog titles -->
     <string name="dialog_title_sort_names_by">View by:</string>
@@ -60,4 +61,5 @@
 
     <!-- Shared preferences keys -->
     <string name="key_sort_names_by">key_sort_names_by</string>
+    <string name="dialog_warning_data_overwrite">Warning: Current data will be permanently overwritten.</string>
 </resources>

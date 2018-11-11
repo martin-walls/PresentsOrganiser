@@ -307,7 +307,6 @@ public class MainActivity extends AppCompatActivity
         tvExportDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO confirmation dialog
                 exportDB();
                 bottomSheetDialog.dismiss();
             }
@@ -317,8 +316,7 @@ public class MainActivity extends AppCompatActivity
         tvImportDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO confirmation dialog
-                importDB();
+                importDBConfirmDialog();
                 bottomSheetDialog.dismiss();
                 loadData();
             }
@@ -337,10 +335,33 @@ public class MainActivity extends AppCompatActivity
                 Toast.LENGTH_SHORT).show();
     }
 
+    private void importDBConfirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View confirmView = inflater.inflate(R.layout.dialog_confirm_import_db, null);
+        TextView message = confirmView.findViewById(R.id.message);
+        String messageString = "Are you sure you want to import database? " +
+                "You must have a previously exported file '" + DBHandler.DATABASE_NAME +
+                "' in the 'Download' folder.";
+        message.setText(messageString);
+        builder.setView(confirmView);
+        builder.setPositiveButton(R.string.dialog_continue, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        importDB();
+                    }
+                }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+
     private void importDB() {
         DBHandler dbHandler = new DBHandler(this);
         boolean result = dbHandler.importDB();
-        Toast.makeText(this, result ? "Success" : "Error importing database",
+        Toast.makeText(this, result ? "Success" : "Error importing database. File must be in Download folder.",
                 Toast.LENGTH_SHORT).show();
     }
 

@@ -26,7 +26,7 @@ import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
     private static int DATABASE_VERSION = 2;
-    private static String DATABASE_NAME = "presentsDB.db";
+    public static String DATABASE_NAME = "presentsDB.db";
 
     private static final String TAG = DBHandler.class.getName();
     private final Context context;
@@ -195,7 +195,8 @@ public class DBHandler extends SQLiteOpenHelper {
         File backupDB = new File(sd, backupDBPath);
         try {
             source = new FileInputStream(backupDB).getChannel();
-            if (currentDB.delete()){
+            // clear current database so new db can be imported
+            if (currentDB.delete()) {
                 destination = new FileOutputStream(currentDB).getChannel();
                 destination.transferFrom(source, 0, source.size());
                 source.close();
@@ -207,7 +208,6 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         return false;
     }
-
 
 
 
