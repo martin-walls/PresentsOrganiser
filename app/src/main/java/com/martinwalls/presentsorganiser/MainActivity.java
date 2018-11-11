@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity
     private void exportDB() {
         DBHandler dbHandler = new DBHandler(this);
         boolean result = dbHandler.exportDB();
-        Toast.makeText(this, result ? "Success" : "Error exporting database",
+        Toast.makeText(this, result ? "Success\nFile exported to 'Download' folder." : "Error exporting database",
                 Toast.LENGTH_SHORT).show();
     }
 
