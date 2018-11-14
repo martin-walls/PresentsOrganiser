@@ -111,6 +111,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        checkExternalStoragePermissions();
     }
 
     @Override
@@ -333,7 +335,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void exportDB() {
-        checkExternalStoragePermissions();
         DBHandler dbHandler = new DBHandler(this);
         boolean result = dbHandler.exportDB();
         Toast.makeText(this, result ? "Success\nFile exported to 'Download' folder." : "Error exporting database",
@@ -364,7 +365,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void importDB() {
-        checkExternalStoragePermissions();
         DBHandler dbHandler = new DBHandler(this);
         boolean result = dbHandler.importDB();
         Toast.makeText(this, result ? "Success" : "Error importing database. File must be in Download folder.",
