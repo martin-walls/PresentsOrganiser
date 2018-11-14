@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-//TODO add "sent" checkbox to presents + db col etc.
 //TODO checkboxes for recipients rather than editText -- checkbox for "all"
 
 public class AddPresentDialog extends DialogFragment {

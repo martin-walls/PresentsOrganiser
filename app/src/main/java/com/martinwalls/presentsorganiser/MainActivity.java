@@ -1,14 +1,17 @@
 package com.martinwalls.presentsorganiser;
 
+import android.Manifest;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NamesAdapter.NamesAdapterListener,
         FamilyAdapter.FamilyAdapterListener {
+    private final int PERMISSIONS_REQUEST_EXTERNAL_STORAGE = 1;
     // shared preferences sort-by values
     public static final int SORTBY_FAMILY = 1;
     public static final int SORTBY_NAME = 2;
@@ -329,6 +333,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void exportDB() {
+        checkExternalStoragePermissions();
         DBHandler dbHandler = new DBHandler(this);
         boolean result = dbHandler.exportDB();
         Toast.makeText(this, result ? "Success\nFile exported to 'Download' folder." : "Error exporting database",
@@ -359,6 +364,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void importDB() {
+        checkExternalStoragePermissions();
         DBHandler dbHandler = new DBHandler(this);
         boolean result = dbHandler.importDB();
         Toast.makeText(this, result ? "Success" : "Error importing database. File must be in Download folder.",
@@ -462,6 +468,33 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, FamilyViewActivity.class);
             intent.putExtra(FAMILY_NAME, family.getFamilyName());
             startActivity(intent);
+        }
+    }
+
+    public void checkExternalStoragePermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST_EXTERNAL_STORAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_EXTERNAL_STORAGE:
+                if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                }
+                return;
         }
     }
 }
