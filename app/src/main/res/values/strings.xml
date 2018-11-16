@@ -18,6 +18,7 @@
     <string name="title_activity_recipient_view">RecipientViewActivity</string>
     <string name="title_activity_family_view">FamilyViewActivity</string>
     <string name="title_activity_add_given_present">Add present</string>
+    <string name="title_activity_presents">PresentsActivity</string>
 
     <!-- Text for views to show when no data -->
     <string name="no_names">No names added</string>
@@ -62,5 +63,4 @@
     <!-- Shared preferences keys -->
     <string name="key_sort_names_by">key_sort_names_by</string>
     <string name="dialog_warning_data_overwrite">Warning: Current data will be permanently overwritten.</string>
-    <string name="title_activity_presents">PresentsActivity</string>
 </resources>
