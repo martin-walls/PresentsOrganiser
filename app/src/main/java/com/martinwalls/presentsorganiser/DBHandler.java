@@ -328,72 +328,6 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-
-//    // create a table for given presents for a year
-//    public boolean createGivenYearTableIfNotExists(String year) {
-//        if (doesYearTableExist(year)) {
-//            return false;
-//        }
-//        String tableName = TABLE_TYPE_GIVEN + year;
-//        String CREATE_YEAR_TABLE = "CREATE TABLE IF NOT EXISTS " + tableName + " (" +
-//                COLUMN_PRESENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                COLUMN_PERSON_ID + " INTEGER, " +
-//                COLUMN_PRESENT + " TEXT NOT NULL, " +
-//                COLUMN_NOTES + " TEXT, " +
-//                COLUMN_BOUGHT + " INTEGER, " +      // boolean 1 or 0
-//                "FOREIGN KEY (" + COLUMN_PERSON_ID + ") REFERENCES " +
-//                TABLE_NAMES + " (" + COLUMN_PERSON_ID + ") )";
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.execSQL(CREATE_YEAR_TABLE);
-//        // update tables list
-//        ContentValues values = new ContentValues();
-//        values.put(COLUMN_TABLE_NAME, tableName);
-//        values.put(COLUMN_TABLE_TYPE, TABLE_TYPE_GIVEN);
-//        db.insert(TABLE_TABLES, null, values);
-//        return true;
-//    }
-
-//    public List<String> loadGivenYearTables() {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        List<String> result = new ArrayList<>();
-//        String query = "SELECT " + COLUMN_TABLE_NAME + " FROM " + TABLE_TABLES +
-//                " WHERE " + COLUMN_TABLE_TYPE + " = '" + TABLE_TYPE_GIVEN + "'";
-//        Cursor cursor = db.rawQuery(query, null);
-//        while (cursor.moveToNext()) {
-//            String tableName = cursor.getString(0);
-//            result.add(tableName);
-//        }
-//        cursor.close();
-//        db.close();
-//        return result;
-//    }
-
-//    public List<String> loadGivenYears() {
-//        List<String> years = new ArrayList<>();
-//        List<String> yearTables = loadGivenYearTables();
-//
-//        for (String tableName: yearTables) {
-//            String year = tableName.substring(tableName.length() - 4);
-//            years.add(year);
-//        }
-//
-//        return years;
-//    }
-
-//    public boolean doesYearTableExist(String year) {
-//        List<String> years = loadGivenYears();
-//        return years.contains(year);
-//    }
-
-//    public long getPresentCountInYear(String year) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        String tableName = TABLE_TYPE_GIVEN + year;
-//        long count = DatabaseUtils.queryNumEntries(db, tableName);
-//        db.close();
-//        return count;
-//    }
-
     // returns present for person for year
     public List<GivenPresent> loadGivenPresentsFromYear(Person person, int year) {
         List<GivenPresent> presentList = new ArrayList<>();
@@ -469,6 +403,29 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return present;
+    }
+
+    public List<GivenPresent> loadUnboughtPresents() {
+        List<GivenPresent> presentList = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
+                " WHERE " + COLUMN_BOUGHT + " = 0";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        while (cursor.moveToNext()) {
+            int presentId = cursor.getInt(0);
+            int year = cursor.getInt(1);
+            int personId = cursor.getInt(2);
+            Person person = loadPerson(personId);
+            String presentName = cursor.getString(3);
+            String notes = cursor.getString(4);
+            boolean isBought = cursor.getInt(5) != 0;
+            boolean isSent = cursor.getInt(6) != 0;
+
+            GivenPresent present = new GivenPresent(year, presentId,
+                    person, presentName, notes, isBought, isSent);
+            presentList.add(present);
+        }
+        return presentList;
     }
 
     public List<GivenPresent> loadGivenPresentsForFamily(Family family) {
