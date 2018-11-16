@@ -69,7 +69,7 @@ public class RecipientViewActivity extends AppCompatActivity
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setEmptyView(findViewById(R.id.empty));
-        givenPresentsAdapter = new GivenPresentsAdapter(presentList, this, false);
+        givenPresentsAdapter = new GivenPresentsAdapter(presentList, this);
         // load presents
         loadPresents();
 

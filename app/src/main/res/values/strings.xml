@@ -62,4 +62,5 @@
     <!-- Shared preferences keys -->
     <string name="key_sort_names_by">key_sort_names_by</string>
     <string name="dialog_warning_data_overwrite">Warning: Current data will be permanently overwritten.</string>
+    <string name="title_activity_presents">PresentsActivity</string>
 </resources>

@@ -49,6 +49,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.martinwalls.presentsorganiser.MainActivity" />
         </activity>
+        <activity
+            android:name=".PresentsActivity"
+            android:label="@string/title_activity_presents"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.martinwalls.presentsorganiser.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

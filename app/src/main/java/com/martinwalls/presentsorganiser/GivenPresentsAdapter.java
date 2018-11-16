@@ -45,6 +45,12 @@ public class GivenPresentsAdapter extends RecyclerView.Adapter<GivenPresentsAdap
         }
     }
 
+    public GivenPresentsAdapter(List<GivenPresent> presentList, GivenPresentsAdapterListener listener) {
+        this.presentList = presentList;
+        this.listener = listener;
+        this.isFamilyView = false;
+    }
+
     public GivenPresentsAdapter(List<GivenPresent> presentList, GivenPresentsAdapterListener listener,
                                 boolean isFamilyView) {
         this.presentList = presentList;
