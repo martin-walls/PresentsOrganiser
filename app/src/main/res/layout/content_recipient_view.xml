@@ -6,24 +6,26 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".RecipientViewActivity"
-    tools:showIn="@layout/activity_recipient_view">
+    tools:showIn="@layout/activity_recipient_view"
+    android:orientation="vertical"
+    >
 
     <com.martinwalls.presentsorganiser.CustomRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never"
+        />
 
     <!-- View to show if no presents in db for person -->
     <TextView
         android:id="@+id/empty"
-        android:text="@string/no_presents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="?android:attr/textAppearanceMedium"
-        android:padding="@dimen/activity_vertical_margin"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"/>
+        android:text="@string/no_presents"
+        style="@style/EmptyListView"
+        />
 
 </LinearLayout>

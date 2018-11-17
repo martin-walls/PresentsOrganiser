@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Main app colors -->
     <color name="colorPrimary">#673ab7</color>
     <color name="colorPrimaryDark">#320b86</color>
     <color name="colorAccent">#f06292</color>
-    <color name="list_row_title">#222222</color>
-    <color name="list_row_content">#555555</color>
-    <color name="selected_item_background">#AAAAAA</color>
-    <color name="divider">#888888</color>
-    <color name="warning_text">#d50000</color>
+
+    <!-- greyscale -->
+    <color name="dark_grey">#222222</color>
+    <color name="medium_grey">#555555</color>
+    <color name="light_grey">#888888</color>
+
+    <!-- Other colors -->
+    <color name="bright_red">#d50000</color>
 </resources>

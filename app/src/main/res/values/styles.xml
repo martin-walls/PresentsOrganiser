@@ -19,4 +19,28 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="EmptyListView">
+        <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:padding">@dimen/activity_margin_large</item>
+        <item name="android:textColor">@color/medium_grey</item>
+    </style>
+
+    <style name="ListSectionHeader">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ListRowTitle">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ListRowInfo">
+        <item name="android:textColor">@color/medium_grey</item>
+        <item name="android:textSize">@dimen/font_large</item>
+    </style>
+
 </resources>
