@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.givenpresents.viewpresents.common;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,14 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.martinwalls.presentsorganiser.GivenPresent;
+import com.martinwalls.presentsorganiser.R;
+
 import java.util.List;
 
-public class PresentsAdapter extends RecyclerView.Adapter<PresentsAdapter.ItemViewHolder> {
+public class GivenPresentsAdapter extends RecyclerView.Adapter<GivenPresentsAdapter.ItemViewHolder> {
     public static final int SECTION_VIEW = 0;
     public static final int CONTENT_VIEW = 1;
 
     private List<GivenPresent> presentList;
-    private PresentsAdapterListener listener;
+    private GivenPresentsAdapterListener listener;
+    private boolean isFamilyView;
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         public TextView year, present, recipient;
@@ -44,9 +48,17 @@ public class PresentsAdapter extends RecyclerView.Adapter<PresentsAdapter.ItemVi
         }
     }
 
-    public PresentsAdapter(List<GivenPresent> presentList, PresentsAdapterListener listener) {
+    public GivenPresentsAdapter(List<GivenPresent> presentList, GivenPresentsAdapterListener listener) {
         this.presentList = presentList;
         this.listener = listener;
+        this.isFamilyView = false;
+    }
+
+    public GivenPresentsAdapter(List<GivenPresent> presentList, GivenPresentsAdapterListener listener,
+                                boolean isFamilyView) {
+        this.presentList = presentList;
+        this.listener = listener;
+        this.isFamilyView = isFamilyView;
     }
 
     @Override
@@ -73,11 +85,13 @@ public class PresentsAdapter extends RecyclerView.Adapter<PresentsAdapter.ItemVi
             holder.year.setText(String.valueOf(present.getYear()));
             holder.present.setText(present.getPresent());
             holder.recipient.setText(present.getRecipient().getName());
+            holder.recipient.setVisibility(isFamilyView ? View.VISIBLE : View.GONE);
             holder.bought.setVisibility(present.isBought() ? View.VISIBLE : View.GONE);
         } else {
             GivenPresent present = presentList.get(position);
             holder.present.setText(present.getPresent());
             holder.recipient.setText(present.getRecipient().getName());
+            holder.recipient.setVisibility(isFamilyView ? View.VISIBLE : View.GONE);
             holder.bought.setVisibility(present.isBought() ? View.VISIBLE : View.GONE);
         }
     }
@@ -87,7 +101,7 @@ public class PresentsAdapter extends RecyclerView.Adapter<PresentsAdapter.ItemVi
         return presentList.size();
     }
 
-    public interface PresentsAdapterListener {
+    public interface GivenPresentsAdapterListener {
         void onPresentClicked(View view, GivenPresent present);
 //        void onPresentLongClicked(View view, GivenPresent present);
     }

@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,6 +10,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.martinwalls.presentsorganiser.BuildConfig;
+import com.martinwalls.presentsorganiser.Family;
+import com.martinwalls.presentsorganiser.GivenPresent;
+import com.martinwalls.presentsorganiser.Person;
 
 import java.io.BufferedReader;
 import java.io.File;

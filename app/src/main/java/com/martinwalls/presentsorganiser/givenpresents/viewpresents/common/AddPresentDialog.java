@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.givenpresents.viewpresents.common;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +11,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.NumberPicker;
+
+import com.martinwalls.presentsorganiser.Family;
+import com.martinwalls.presentsorganiser.Person;
+import com.martinwalls.presentsorganiser.R;
+import com.martinwalls.presentsorganiser.database.DBHandler;
 
 import java.util.ArrayList;
 import java.util.Calendar;

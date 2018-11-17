@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".RecipientViewActivity"
+    tools:context=".givenpresents.viewpresents.recipient.RecipientViewActivity"
     tools:showIn="@layout/activity_recipient_view"
     android:orientation="vertical"
     >
 
-    <com.martinwalls.presentsorganiser.CustomRecyclerView
+    <com.martinwalls.presentsorganiser.ui.CustomRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

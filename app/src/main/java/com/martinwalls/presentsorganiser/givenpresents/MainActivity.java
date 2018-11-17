@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.givenpresents;
 
 import android.Manifest;
 import android.app.SearchManager;
@@ -33,6 +33,16 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.martinwalls.presentsorganiser.Family;
+import com.martinwalls.presentsorganiser.Person;
+import com.martinwalls.presentsorganiser.R;
+import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.family.FamilyViewActivity;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.pendingpresents.PendingPendingPresentsActivity;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.recipient.RecipientViewActivity;
+import com.martinwalls.presentsorganiser.ui.CustomRecyclerView;
+import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -265,8 +275,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showUnboughtPresents() {
-        Intent intent = new Intent(this, PresentsActivity.class);
-        intent.putExtra(PresentsActivity.PRESENTS_TO_SHOW, PresentsActivity.UNBOUGHT);
+        Intent intent = new Intent(this, PendingPendingPresentsActivity.class);
+        intent.putExtra(PendingPendingPresentsActivity.PRESENTS_TO_SHOW, PendingPendingPresentsActivity.UNBOUGHT);
 
         startActivity(intent);
     }

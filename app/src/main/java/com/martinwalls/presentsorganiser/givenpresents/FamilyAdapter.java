@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.givenpresents;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,38 +8,42 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.martinwalls.presentsorganiser.Family;
+import com.martinwalls.presentsorganiser.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.MyViewHolder>
+public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.MyViewHolder>
         implements Filterable {
     private final int SECTION_VIEW = 0;
     private final int CONTENT_VIEW = 0;
 
-    private List<Person> personList;
-    private List<Person> personListFiltered;
-    private NamesAdapterListener listener;
+    private List<Family> familyList;
+    private List<Family> familyListFiltered;
+    private FamilyAdapterListener listener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, letter;
+        public TextView name, letter, info;
 
         public MyViewHolder(View view) {
             super(view);
             letter = view.findViewById(R.id.letter);
             name = view.findViewById(R.id.name);
+            info = view.findViewById(R.id.info);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onNameSelected(personListFiltered.get(getAdapterPosition()));
+                    listener.onFamilySelected(familyListFiltered.get(getAdapterPosition()));
                 }
             });
         }
     }
 
-    public NamesAdapter(List<Person> namesList, NamesAdapterListener listener) {
-        this.personList = namesList;
-        this.personListFiltered = namesList;
+    public FamilyAdapter(List<Family> namesList, FamilyAdapterListener listener) {
+        this.familyList = namesList;
+        this.familyListFiltered = namesList;
         this.listener = listener;
     }
 
@@ -53,7 +57,7 @@ public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.MyViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (personListFiltered.get(position).isSection()) {
+        if (familyListFiltered.get(position).isSection()) {
             return SECTION_VIEW;
         } else {
             return CONTENT_VIEW;
@@ -63,18 +67,24 @@ public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         if (getItemViewType(position) == SECTION_VIEW) {
-            Person person = personListFiltered.get(position);
-            holder.letter.setText(person.getSectionName());
-            holder.name.setText(person.getName());
+            Family family = familyListFiltered.get(position);
+            holder.letter.setText(family.getFamilyName().substring(0, 1));
+            holder.name.setText(family.getFamilyName());
+            String numMembers = family.getFamilyMembers().size() +
+                    (family.getFamilyMembers().size() == 1 ? " Person" : " People");
+            holder.info.setText(numMembers);
         } else {
-            Person person = personListFiltered.get(position);
-            holder.name.setText(person.getName());
+            Family family = familyListFiltered.get(position);
+            holder.name.setText(family.getFamilyName());
+            String numMembers = family.getFamilyMembers().size() +
+                    (family.getFamilyMembers().size() == 1 ? " Person" : " People");
+            holder.info.setText(numMembers);
         }
     }
 
     @Override
     public int getItemCount() {
-        return personListFiltered.size();
+        return familyListFiltered.size();
     }
 
     @Override
@@ -84,33 +94,34 @@ public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.MyViewHolder
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
-                    personListFiltered = personList;
+                    familyListFiltered = familyList;
                 } else {
-                    List<Person> filteredList = new ArrayList<>();
-                    for (Person person : personList) {
+                    List<Family> filteredList = new ArrayList<>();
+                    for (Family family : familyList) {
                         // check if name contains search string
-                        if (person.getName().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(person);
+                        if (family.getFamilyName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(family);
                         }
                     }
-                    personListFiltered = filteredList;
+                    familyListFiltered = filteredList;
                 }
 
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = personListFiltered;
+                filterResults.values = familyListFiltered;
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults results) {
                 // update recycler view
-                personListFiltered = (ArrayList<Person>) results.values;
+                familyListFiltered = (ArrayList<Family>) results.values;
                 notifyDataSetChanged();
             }
         };
     }
 
-    public interface NamesAdapterListener {
-        void onNameSelected(Person person);
+    public interface FamilyAdapterListener {
+        void onFamilySelected(Family family);
     }
 }
+

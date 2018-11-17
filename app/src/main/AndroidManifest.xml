@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name=".givenpresents.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -32,31 +32,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RecipientViewActivity"
+            android:name=".givenpresents.viewpresents.recipient.RecipientViewActivity"
             android:label="@string/title_activity_recipient_view"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".givenpresents.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.martinwalls.presentsorganiser.MainActivity" />
+                android:value=".givenpresents.MainActivity" />
         </activity>
         <activity
-            android:name=".FamilyViewActivity"
+            android:name=".givenpresents.viewpresents.family.FamilyViewActivity"
             android:label="@string/title_activity_family_view"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".givenpresents.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.martinwalls.presentsorganiser.MainActivity" />
+                android:value=".givenpresents.MainActivity" />
         </activity>
         <activity
-            android:name=".PresentsActivity"
+            android:name=".givenpresents.viewpresents.pendingpresents.PendingPendingPresentsActivity"
             android:label="@string/title_activity_presents"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".givenpresents.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.martinwalls.presentsorganiser.MainActivity" />
+                android:value=".givenpresents.MainActivity" />
         </activity>
     </application>
 

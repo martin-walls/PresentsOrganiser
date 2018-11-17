@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.givenpresents.viewpresents.recipient;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,32 +22,43 @@ import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.martinwalls.presentsorganiser.GivenPresent;
+import com.martinwalls.presentsorganiser.Person;
+import com.martinwalls.presentsorganiser.R;
+import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.givenpresents.MainActivity;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.AddPresentDialog;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.DetailsDialog;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.GivenPresentsAdapter;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.family.FamilyViewActivity;
+import com.martinwalls.presentsorganiser.ui.CustomRecyclerView;
+import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 //TODO add events to add presents for -- xmas / bday -- dropdown? -- new db col?
-//TODO group same presents for people
+//TODO option to add to family / change family
+//TODO text wrapping names
 
-public class FamilyViewActivity extends AppCompatActivity
-        // handles positive click on add present dialog
+public class RecipientViewActivity extends AppCompatActivity
+    // handles positive click on add present dialog
         implements AddPresentDialog.addPresentDialogListener,
-        // handles clicks on presents in list
+    // handles clicks on presents in list
         GivenPresentsAdapter.GivenPresentsAdapterListener,
-        // handles positive click on details dialog
-        DetailsDialog.DetailsDialogListener,
-        // handles clicks on members in dialog
-        ViewMembersDialog.ViewMembersDialogListener {
+    // handles positive click on details dialog
+        DetailsDialog.DetailsDialogListener {
 
     private List<GivenPresent> presentList = new ArrayList<>();
     private CustomRecyclerView recyclerView;
     private GivenPresentsAdapter givenPresentsAdapter;
-    private Family family;
+    private Person recipient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_family_view);
+        setContentView(R.layout.activity_recipient_view);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,14 +66,14 @@ public class FamilyViewActivity extends AppCompatActivity
 
         // load person
         Intent intent = getIntent();
-        String familyName = intent.getStringExtra(MainActivity.FAMILY_NAME);
+        int recipientId = intent.getIntExtra(MainActivity.RECIPIENT_ID, -1);
         DBHandler dbHandler = new DBHandler(this);
-        family = dbHandler.loadFamily(familyName);
-        getSupportActionBar().setTitle(family.getFamilyName());
+        recipient = dbHandler.loadPerson(recipientId);
+        getSupportActionBar().setTitle(recipient.getName());
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setEmptyView(findViewById(R.id.empty));
-        givenPresentsAdapter = new GivenPresentsAdapter(presentList, this, true);
+        givenPresentsAdapter = new GivenPresentsAdapter(presentList, this);
         // load presents
         loadPresents();
 
@@ -88,7 +99,8 @@ public class FamilyViewActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_recipient_view, menu);
+        getMenuInflater().inflate(recipient.getFamily().isEmpty() ?
+                R.menu.menu_recipient_view_no_family : R.menu.menu_recipient_view, menu);
 
         return true;
     }
@@ -102,8 +114,7 @@ public class FamilyViewActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_people) {
-            viewMembersDialog();
-            return true;
+            gotoFamilyDialog();
         } else if (id == R.id.action_delete) {
             deleteNameDialog();
             return true;
@@ -112,25 +123,14 @@ public class FamilyViewActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void viewMembersDialog() {
-        DialogFragment dialog = new ViewMembersDialog();
-
-        Bundle bundle = new Bundle();
-        bundle.putString(ViewMembersDialog.ARG_FAMILY_NAME, family.getFamilyName());
-        dialog.setArguments(bundle);
-
-        dialog.show(getSupportFragmentManager(), "viewMembers");
-
-    }
-
-    private void deleteNameDialog() {
+    public void gotoFamilyDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to permanently delete this family? " +
-                "This will delete all family members.");
-        builder.setPositiveButton(R.string.dialog_delete, new DialogInterface.OnClickListener() {
+        builder.setMessage(recipient.getName() + " is in family: " + recipient.getFamily() +
+                ". \nDo you want to view " + recipient.getFamily() + "?");
+        builder.setPositiveButton(R.string.dialog_view_family, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deleteFamily();
+                gotoFamily();
             }
         });
         builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -142,9 +142,33 @@ public class FamilyViewActivity extends AppCompatActivity
         builder.show();
     }
 
-    private void deleteFamily() {
+    private void gotoFamily() {
+        Intent intent = new Intent(this, FamilyViewActivity.class);
+        intent.putExtra(MainActivity.FAMILY_NAME, recipient.getFamily());
+        startActivity(intent);
+    }
+
+    private void deleteNameDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to permanently delete this person?");
+        builder.setPositiveButton(R.string.dialog_delete, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteName();
+            }
+        });
+        builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void deleteName() {
         DBHandler dbHandler = new DBHandler(this);
-        boolean result = dbHandler.deleteFamily(family);
+        boolean result = dbHandler.deletePerson(recipient);
         if (result) {
             Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
             NavUtils.navigateUpFromSameTask(this);
@@ -157,10 +181,7 @@ public class FamilyViewActivity extends AppCompatActivity
     // get presents from db and add sections by year
     private void loadPresents() {
         DBHandler dbHandler = new DBHandler(this);
-        List<GivenPresent> presents = new ArrayList<>();
-        for (Person person : family.getFamilyMembers()) {
-            presents.addAll(dbHandler.loadGivenPresents(person));
-        }
+        List<GivenPresent> presents = dbHandler.loadGivenPresents(recipient);
 
         int lastSection = 0;
         int size = presents.size();
@@ -188,10 +209,6 @@ public class FamilyViewActivity extends AppCompatActivity
     private void addPresentDialog() {
         DialogFragment dialog = new AddPresentDialog();
 
-        Bundle bundle = new Bundle();
-        bundle.putString(AddPresentDialog.ARG_FAMILY_NAME, family.getFamilyName());
-        dialog.setArguments(bundle);
-
         dialog.show(getSupportFragmentManager(), "addPresent");
     }
 
@@ -199,20 +216,16 @@ public class FamilyViewActivity extends AppCompatActivity
     public void onAddPresentDialogPositiveClick(DialogFragment dialog) {
         NumberPicker yearPicker = dialog.getDialog().findViewById(R.id.yearPicker);
         int year = yearPicker.getValue();
-        EditText recipientName = dialog.getDialog().findViewById(R.id.recipient);
         EditText present = dialog.getDialog().findViewById(R.id.present);
         EditText notes = dialog.getDialog().findViewById(R.id.notes);
         CheckBox bought = dialog.getDialog().findViewById(R.id.bought);
         CheckBox sent = dialog.getDialog().findViewById(R.id.sent);
 
-        final DBHandler dbHandler = new DBHandler(this);
-
-        Person recipient = dbHandler.loadPerson(
-                dbHandler.loadPersonId(recipientName.getText().toString(), family.getFamilyName()));
         final GivenPresent newPresent = new GivenPresent(year, recipient,
                 present.getText().toString(), notes.getText().toString(),
                 bought.isChecked(), sent.isChecked());
 
+        final DBHandler dbHandler = new DBHandler(this);
 
         if (dbHandler.isPresentAlreadyGiven(newPresent)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -267,10 +280,13 @@ public class FamilyViewActivity extends AppCompatActivity
         DialogFragment dialog = new DetailsDialog();
         Bundle bundle = new Bundle();
         bundle.putInt(DetailsDialog.ARG_PRESENT_ID, present.getPresentId());
-        bundle.putBoolean(DetailsDialog.ARG_SHOW_PERSON, true);
 
         dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(), "details");
+
+//        actionMode = this.startActionMode(callback);
+//        actionMode.setTitle(present.getPresent());
+//        view.setSelected(true);
     }
 
     // update present if it has been changed
@@ -291,7 +307,7 @@ public class FamilyViewActivity extends AppCompatActivity
 
             // check if any values have changed else don't update
             if (!(newPresent.equals(present.getPresent()) && newNotes.equals(present.getNotes())
-                    && newBought == present.isBought() && newSent == present.isSent())) {
+                    && newBought == present.isBought())) {
 
                 present.setPresent(newPresent);
                 present.setNotes(newNotes);
@@ -332,15 +348,5 @@ public class FamilyViewActivity extends AppCompatActivity
         Toast.makeText(this, result ? "Present deleted" : "Not deleted",
                 Toast.LENGTH_SHORT).show();
         loadPresents();
-    }
-
-    @Override
-    public void onMemberClicked(String name) {
-        DBHandler dbHandler = new DBHandler(this);
-        int recipientId = dbHandler.loadPersonId(name, family.getFamilyName());
-
-        Intent intent = new Intent(this, RecipientViewActivity.class);
-        intent.putExtra(MainActivity.RECIPIENT_ID, recipientId);
-        startActivity(intent);
     }
 }

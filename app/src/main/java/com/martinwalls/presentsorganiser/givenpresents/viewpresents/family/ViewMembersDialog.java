@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.givenpresents.viewpresents.family;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +11,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import com.martinwalls.presentsorganiser.Family;
+import com.martinwalls.presentsorganiser.R;
+import com.martinwalls.presentsorganiser.database.DBHandler;
 
 public class ViewMembersDialog extends DialogFragment
         implements FamilyMembersAdapter.FamilyMembersAdapterListener {

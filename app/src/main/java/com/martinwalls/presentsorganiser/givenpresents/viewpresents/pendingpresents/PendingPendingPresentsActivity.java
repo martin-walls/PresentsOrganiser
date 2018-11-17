@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.givenpresents.viewpresents.pendingpresents;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,11 +16,18 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.martinwalls.presentsorganiser.GivenPresent;
+import com.martinwalls.presentsorganiser.R;
+import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.DetailsDialog;
+import com.martinwalls.presentsorganiser.ui.CustomRecyclerView;
+import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PresentsActivity extends AppCompatActivity
-        implements PresentsAdapter.PresentsAdapterListener,
+public class PendingPendingPresentsActivity extends AppCompatActivity
+        implements PendingPresentsAdapter.PendingPresentsAdapterListener,
         DetailsDialog.DetailsDialogListener {
 
     public static String PRESENTS_TO_SHOW = "com.martinwalls.PRESENTS_TO_SHOW";
@@ -30,7 +37,7 @@ public class PresentsActivity extends AppCompatActivity
 
     private List<GivenPresent> presentList = new ArrayList<>();
     private CustomRecyclerView recyclerView;
-    private PresentsAdapter presentsAdapter;
+    private PendingPresentsAdapter pendingPresentsAdapter;
     private int presentsToShow;
 
 
@@ -50,7 +57,7 @@ public class PresentsActivity extends AppCompatActivity
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setEmptyView(findViewById(R.id.empty));
-        presentsAdapter = new PresentsAdapter(presentList, this);
+        pendingPresentsAdapter = new PendingPresentsAdapter(presentList, this);
 
         // load presents
         loadPresents();
@@ -61,14 +68,14 @@ public class PresentsActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(presentsAdapter);
+        recyclerView.setAdapter(pendingPresentsAdapter);
     }
 
     private void loadPresents() {
         DBHandler dbHandler = new DBHandler(this);
         presentList.clear();
         presentList.addAll(dbHandler.loadUnboughtPresents());
-        presentsAdapter.notifyDataSetChanged();
+        pendingPresentsAdapter.notifyDataSetChanged();
     }
 
     @Override

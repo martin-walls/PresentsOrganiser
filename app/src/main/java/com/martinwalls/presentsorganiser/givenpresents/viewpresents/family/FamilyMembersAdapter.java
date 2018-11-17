@@ -1,10 +1,14 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.givenpresents.viewpresents.family;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.martinwalls.presentsorganiser.Family;
+import com.martinwalls.presentsorganiser.Person;
+import com.martinwalls.presentsorganiser.R;
 
 import java.util.List;
 
