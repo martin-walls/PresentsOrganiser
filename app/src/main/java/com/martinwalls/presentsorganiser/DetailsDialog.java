@@ -39,8 +39,8 @@ public class DetailsDialog extends DialogFragment {
 
         // inflate and set layout for dialog
         View presentDetailsView = inflater.inflate(R.layout.dialog_present_details, null);
-        nonEditView = presentDetailsView.findViewById(R.id.normalview);
-        editView = presentDetailsView.findViewById(R.id.editview);
+        nonEditView = presentDetailsView.findViewById(R.id.non_edit_view);
+        editView = presentDetailsView.findViewById(R.id.edit_view);
 
         ImageButton editBtn = presentDetailsView.findViewById(R.id.btn_edit);
         editBtn.setOnClickListener(new View.OnClickListener() {
@@ -117,17 +117,17 @@ public class DetailsDialog extends DialogFragment {
     private void showEditView() {
         nonEditView.setVisibility(View.GONE);
         editView.setVisibility(View.VISIBLE);
-        TextView tvTitle = editView.findViewById(R.id.editview_title);
+        TextView tvTitle = editView.findViewById(R.id.present);
         tvTitle.setText(present.getPresent());
-        TextView tvRecipient = editView.findViewById(R.id.editview_recipient);
+        TextView tvRecipient = editView.findViewById(R.id.recipient);
         tvRecipient.setText(present.getRecipient().getName());
-        EditText etPresent = editView.findViewById(R.id.editview_present);
+        EditText etPresent = editView.findViewById(R.id.edit_present);
         etPresent.setText(present.getPresent());
-        EditText etNotes = editView.findViewById(R.id.editview_notes);
+        EditText etNotes = editView.findViewById(R.id.edit_notes);
         etNotes.setText(present.getNotes());
-        CheckBox cbBought = editView.findViewById(R.id.editview_bought);
+        CheckBox cbBought = editView.findViewById(R.id.checkbox_bought);
         cbBought.setChecked(present.isBought());
-        CheckBox cbSent = editView.findViewById(R.id.editview_sent);
+        CheckBox cbSent = editView.findViewById(R.id.checkbox_sent);
         cbSent.setChecked(present.isSent());
     }
 }

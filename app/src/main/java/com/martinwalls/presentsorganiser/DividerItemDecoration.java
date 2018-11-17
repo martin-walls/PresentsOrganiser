@@ -33,7 +33,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 //        int left = parent.getPaddingLeft();
-        int left = parent.getResources().getDimensionPixelSize(R.dimen.list_row_inset);
+        int left = parent.getResources().getDimensionPixelSize(R.dimen.inset_large);
         int right = parent.getWidth() - parent.getPaddingRight();
 
         int childCount = parent.getChildCount();

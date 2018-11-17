@@ -280,13 +280,13 @@ public class RecipientViewActivity extends AppCompatActivity
     // update present if it has been changed
     @Override
     public void onDetailsDialogPositiveClick(DialogFragment dialog, GivenPresent present) {
-        RelativeLayout editView = dialog.getDialog().findViewById(R.id.editview);
+        RelativeLayout editView = dialog.getDialog().findViewById(R.id.edit_view);
         if (editView.getVisibility() == View.VISIBLE) {
             // get views
-            EditText etPresent = dialog.getDialog().findViewById(R.id.editview_present);
-            EditText etNotes = dialog.getDialog().findViewById(R.id.editview_notes);
-            CheckBox cbBought = dialog.getDialog().findViewById(R.id.editview_bought);
-            CheckBox cbSent = dialog.getDialog().findViewById(R.id.editview_sent);
+            EditText etPresent = dialog.getDialog().findViewById(R.id.edit_present);
+            EditText etNotes = dialog.getDialog().findViewById(R.id.edit_notes);
+            CheckBox cbBought = dialog.getDialog().findViewById(R.id.checkbox_bought);
+            CheckBox cbSent = dialog.getDialog().findViewById(R.id.checkbox_sent);
             // get values
             String newPresent = etPresent.getText().toString();
             String newNotes = etNotes.getText().toString();
