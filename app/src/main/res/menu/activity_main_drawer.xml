@@ -3,35 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
-
-    <item android:title="Communicate">
+    <item android:title="@string/nav_received_presents">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_families_view"
+                    android:icon="@drawable/round_people_24"
+                    android:title="@string/nav_families_view" />
+                <item
+                    android:id="@+id/nav_names_view"
+                    android:icon="@drawable/round_person_24"
+                    android:title="@string/nav_names_view" />
+                <item
+                    android:id="@+id/nav_unbought"
+                    android:icon="@drawable/round_attach_money_24"
+                    android:title="@string/nav_unbought" />
+                <item
+                    android:id="@+id/nav_unsent"
+                    android:icon="@drawable/round_send_24"
+                    android:title="@string/nav_unsent" />
+                </group>
         </menu>
     </item>
 

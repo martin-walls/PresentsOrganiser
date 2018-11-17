@@ -14,6 +14,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -48,7 +49,8 @@ public class MainActivity extends AppCompatActivity
     // shared preferences sort-by values
     public static final int SORTBY_FAMILY = 1;
     public static final int SORTBY_NAME = 2;
-    private final int SORTBY_DEFAULT = SORTBY_NAME;
+
+    private int SORTBY = SORTBY_FAMILY;
 
     public static final String RECIPIENT_ID = "com.martinwalls.presentsorganiser.RECIPIENT_ID";
     public static final String FAMILY_NAME = "com.martinwalls.presentsorganiser.FAMILY_NAME";
@@ -71,13 +73,10 @@ public class MainActivity extends AppCompatActivity
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setEmptyView(findViewById(R.id.empty));
 
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        int sortMode = sharedPref.getInt(getString(R.string.key_sort_names_by), SORTBY_DEFAULT);
-
         familyAdapter = new FamilyAdapter(familyList, this);
         namesAdapter = new NamesAdapter(personList, this);
 
-        // load the names from database
+        // Load data from db
         loadData();
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, R.drawable.divider);
@@ -86,11 +85,6 @@ public class MainActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        if (sortMode == SORTBY_FAMILY) {
-            recyclerView.setAdapter(familyAdapter);
-        } else {
-            recyclerView.setAdapter(namesAdapter);
-        }
 
         // set up FAB
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -103,14 +97,14 @@ public class MainActivity extends AppCompatActivity
         });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        //TODO re-enable when received presents implemented, disabled for now
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.addDrawerListener(toggle);
-//        toggle.syncState();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_families_view);
 
         checkExternalStoragePermissions();
     }
@@ -182,18 +176,16 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_families_view) {
+            SORTBY = SORTBY_FAMILY;
+            loadFamilies();
+        } else if (id == R.id.nav_names_view) {
+            SORTBY = SORTBY_NAME;
+            loadNames();
+        } else if (id == R.id.nav_unbought) {
+            showUnboughtPresents();
+        } else if (id == R.id.nav_unsent) {
+            showUnsentPresents();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -202,9 +194,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadData() {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        int sortMode = sharedPref.getInt(getString(R.string.key_sort_names_by), SORTBY_DEFAULT);
-        if (sortMode == SORTBY_FAMILY) {
+        if (SORTBY == SORTBY_FAMILY) {
             loadFamilies();
         } else {
             loadNames();
@@ -274,13 +264,20 @@ public class MainActivity extends AppCompatActivity
         familyAdapter.notifyDataSetChanged();
     }
 
+    private void showUnboughtPresents() {
+        Intent intent = new Intent(this, PresentsActivity.class);
+        intent.putExtra(PresentsActivity.PRESENTS_TO_SHOW, PresentsActivity.UNBOUGHT);
+
+        startActivity(intent);
+    }
+
+    private void showUnsentPresents() {}
+
     private void bottomSettingsDialog() {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_bottom_main, null);
         RadioGroup radioGroup = dialogView.findViewById(R.id.radio_sort_by);
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        int sortMode = sharedPref.getInt(getString(R.string.key_sort_names_by), SORTBY_DEFAULT);
-        switch (sortMode) {
+        switch (SORTBY) {
             case SORTBY_FAMILY:
                 radioGroup.check(R.id.radio_family);
                 break;

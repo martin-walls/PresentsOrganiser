@@ -1,10 +1,16 @@
 <resources>
 
+    <!-- Navigation drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Presents Organiser</string>
     <string name="nav_header_desc">Navigation header</string>
+
+    <string name="nav_families_view">Sort by family</string>
+    <string name="nav_names_view">Sort by name</string>
+    <string name="nav_unbought">Unbought presents</string>
+    <string name="nav_unsent">Unsent presents</string>
+    <string name="nav_received_presents">Received presents</string>
 
     <!-- Menu bar icon titles -->
     <string name="action_search">Search</string>

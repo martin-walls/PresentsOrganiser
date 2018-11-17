@@ -8,4 +8,22 @@
     tools:context="com.martinwalls.presentsorganiser.PresentsActivity"
     tools:showIn="@layout/activity_presents">
 
+    <com.martinwalls.presentsorganiser.CustomRecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:overScrollMode="never" />
+
+    <!-- View to show if no presents -->
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_presents"
+        style="?android:attr/textAppearanceMedium"
+        android:padding="@dimen/activity_vertical_margin"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"/>
+
 </android.support.constraint.ConstraintLayout>
