@@ -20,14 +20,17 @@ public class DetailsDialog extends DialogFragment {
     private RelativeLayout nonEditView, editView;
     private boolean isFromFamilyView = false;
 
+    public static final String ARG_PRESENT_ID = "PRESENT_ID";
+    public static final String ARG_FROM_FAMILY_VIEW = "FROM_FAMILY_VIEW";
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         if (getArguments() != null) {
-            int presentId = getArguments().getInt(RecipientViewActivity.ARG_PRESENT_ID);
+            int presentId = getArguments().getInt(ARG_PRESENT_ID);
             DBHandler dbHandler = new DBHandler(getContext());
             present = dbHandler.loadPresent(presentId);
-            if (getArguments().containsKey(FamilyViewActivity.ARG_FROM_FAMILY_VIEW)) {
-                isFromFamilyView = getArguments().getBoolean(FamilyViewActivity.ARG_FROM_FAMILY_VIEW);
+            if (getArguments().containsKey(ARG_FROM_FAMILY_VIEW)) {
+                isFromFamilyView = getArguments().getBoolean(ARG_FROM_FAMILY_VIEW);
             }
         }
 

@@ -17,11 +17,13 @@ public class ViewMembersDialog extends DialogFragment
     private ViewMembersDialogListener listener;
     private Family family;
 
+    public static final String ARG_FAMILY_NAME = "FAMILY_NAME";
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         if (getArguments() != null) {
             DBHandler dbHandler = new DBHandler(getContext());
-            family = dbHandler.loadFamily(getArguments().getString(FamilyViewActivity.ARG_FAMILY_NAME));
+            family = dbHandler.loadFamily(getArguments().getString(ARG_FAMILY_NAME));
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

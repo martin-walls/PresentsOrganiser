@@ -39,16 +39,6 @@ public class FamilyViewActivity extends AppCompatActivity
         // handles clicks on members in dialog
         ViewMembersDialog.ViewMembersDialogListener {
 
-    public static final String ARG_FROM_FAMILY_VIEW = "from_family_view";
-    public static final String ARG_FAMILY_NAME = "family_name";
-    public static final String ARG_PRESENT_ID = RecipientViewActivity.ARG_PRESENT_ID;
-    public static final String ARG_PERSON_ID = RecipientViewActivity.ARG_PERSON_ID;
-    public static final String ARG_YEAR = RecipientViewActivity.ARG_YEAR;
-    public static final String ARG_PRESENT = RecipientViewActivity.ARG_PRESENT;
-    public static final String ARG_NOTES = RecipientViewActivity.ARG_NOTES;
-    public static final String ARG_BOUGHT = RecipientViewActivity.ARG_BOUGHT;
-    public static final String ARG_SENT = RecipientViewActivity.ARG_SENT;
-
     private List<GivenPresent> presentList = new ArrayList<>();
     private CustomRecyclerView recyclerView;
     private GivenPresentsAdapter givenPresentsAdapter;
@@ -126,7 +116,7 @@ public class FamilyViewActivity extends AppCompatActivity
         DialogFragment dialog = new ViewMembersDialog();
 
         Bundle bundle = new Bundle();
-        bundle.putString(ARG_FAMILY_NAME, family.getFamilyName());
+        bundle.putString(ViewMembersDialog.ARG_FAMILY_NAME, family.getFamilyName());
         dialog.setArguments(bundle);
 
         dialog.show(getSupportFragmentManager(), "viewMembers");
@@ -199,7 +189,7 @@ public class FamilyViewActivity extends AppCompatActivity
         DialogFragment dialog = new AddPresentDialog();
 
         Bundle bundle = new Bundle();
-        bundle.putString(ARG_FAMILY_NAME, family.getFamilyName());
+        bundle.putString(AddPresentDialog.ARG_FAMILY_NAME, family.getFamilyName());
         dialog.setArguments(bundle);
 
         dialog.show(getSupportFragmentManager(), "addPresent");
@@ -276,8 +266,8 @@ public class FamilyViewActivity extends AppCompatActivity
 
         DialogFragment dialog = new DetailsDialog();
         Bundle bundle = new Bundle();
-        bundle.putInt(ARG_PRESENT_ID, present.getPresentId());
-        bundle.putBoolean(ARG_FROM_FAMILY_VIEW, true);
+        bundle.putInt(DetailsDialog.ARG_PRESENT_ID, present.getPresentId());
+        bundle.putBoolean(DetailsDialog.ARG_FROM_FAMILY_VIEW, true);
 
         dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(), "details");

@@ -38,14 +38,6 @@ public class RecipientViewActivity extends AppCompatActivity
     // handles positive click on details dialog
         DetailsDialog.DetailsDialogListener {
 
-    public static final String ARG_PRESENT_ID = "present_id";
-    public static final String ARG_PERSON_ID = "person_id";
-    public static final String ARG_YEAR = "year";
-    public static final String ARG_PRESENT = "present";
-    public static final String ARG_NOTES = "notes";
-    public static final String ARG_BOUGHT = "bought";
-    public static final String ARG_SENT = "sent";
-
     private List<GivenPresent> presentList = new ArrayList<>();
     private CustomRecyclerView recyclerView;
     private GivenPresentsAdapter givenPresentsAdapter;
@@ -275,7 +267,7 @@ public class RecipientViewActivity extends AppCompatActivity
 
         DialogFragment dialog = new DetailsDialog();
         Bundle bundle = new Bundle();
-        bundle.putInt(ARG_PRESENT_ID, present.getPresentId());
+        bundle.putInt(DetailsDialog.ARG_PRESENT_ID, present.getPresentId());
 
         dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(), "details");

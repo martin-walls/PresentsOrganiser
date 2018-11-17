@@ -23,12 +23,14 @@ public class AddPresentDialog extends DialogFragment {
     private Family family = new Family();
     private boolean showNameField = false;
 
+    public static final String ARG_FAMILY_NAME = "FAMILY_NAME";
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         if (getArguments() != null) {
             DBHandler dbHandler = new DBHandler(getContext());
             family = dbHandler.loadFamily(
-                    getArguments().getString(FamilyViewActivity.ARG_FAMILY_NAME));
+                    getArguments().getString(ARG_FAMILY_NAME));
             showNameField = true;
         }
 

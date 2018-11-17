@@ -2,6 +2,7 @@ package com.martinwalls.presentsorganiser;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,8 @@ public class PresentsActivity extends AppCompatActivity
     private CustomRecyclerView recyclerView;
     private PresentsAdapter presentsAdapter;
     private int presentsToShow;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,15 @@ public class PresentsActivity extends AppCompatActivity
         recyclerView.setAdapter(presentsAdapter);
     }
 
+
+
     @Override
-    public void onPresentClicked(View view, GivenPresent present) {}
+    public void onPresentClicked(View view, GivenPresent present) {
+        DialogFragment dialog = new DetailsDialog();
+        Bundle bundle = new Bundle();
+        bundle.putInt(DetailsDialog.ARG_PRESENT_ID, present.getPresentId());
+
+        dialog.setArguments(bundle);
+        dialog.show(getSupportFragmentManager(), "details");
+    }
 }
