@@ -8,12 +8,12 @@
     android:paddingTop="@dimen/activity_margin">
 
     <include
-        layout="@layout/dialog_presentdetails_view"
+        layout="@layout/dialog_present_details_view"
         android:id="@+id/non_edit_view"
         />
 
     <include
-        layout="@layout/dialog_presentdetails_edit"
+        layout="@layout/dialog_present_details_edit"
         android:id="@+id/edit_view"
         android:visibility="gone"
         />
