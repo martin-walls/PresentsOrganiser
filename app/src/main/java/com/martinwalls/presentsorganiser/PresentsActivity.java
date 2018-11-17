@@ -76,6 +76,7 @@ public class PresentsActivity extends AppCompatActivity
         DialogFragment dialog = new DetailsDialog();
         Bundle bundle = new Bundle();
         bundle.putInt(DetailsDialog.ARG_PRESENT_ID, present.getPresentId());
+        bundle.putBoolean(DetailsDialog.ARG_SHOW_PERSON, true);
 
         dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(), "details");

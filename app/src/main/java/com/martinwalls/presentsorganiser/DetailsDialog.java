@@ -18,10 +18,10 @@ public class DetailsDialog extends DialogFragment {
     DetailsDialogListener listener;
     private GivenPresent present = new GivenPresent();
     private RelativeLayout nonEditView, editView;
-    private boolean isFromFamilyView = false;
+    private boolean showPerson = false;
 
     public static final String ARG_PRESENT_ID = "PRESENT_ID";
-    public static final String ARG_FROM_FAMILY_VIEW = "FROM_FAMILY_VIEW";
+    public static final String ARG_SHOW_PERSON = "SHOW_PERSON";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class DetailsDialog extends DialogFragment {
             int presentId = getArguments().getInt(ARG_PRESENT_ID);
             DBHandler dbHandler = new DBHandler(getContext());
             present = dbHandler.loadPresent(presentId);
-            if (getArguments().containsKey(ARG_FROM_FAMILY_VIEW)) {
-                isFromFamilyView = getArguments().getBoolean(ARG_FROM_FAMILY_VIEW);
+            if (getArguments().containsKey(ARG_SHOW_PERSON)) {
+                showPerson = getArguments().getBoolean(ARG_SHOW_PERSON);
             }
         }
 
@@ -61,7 +61,7 @@ public class DetailsDialog extends DialogFragment {
 
         // show recipient name if in family view
         TextView tvRecipientName = presentDetailsView.findViewById(R.id.recipient);
-        if (isFromFamilyView) {
+        if (showPerson) {
             tvRecipientName.setText(present.getRecipient().getName());
         } else {
             tvRecipientName.setVisibility(View.GONE);
