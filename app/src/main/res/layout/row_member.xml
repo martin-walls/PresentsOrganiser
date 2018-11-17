@@ -7,19 +7,20 @@
     android:clickable="true"
     android:focusable="true"
     android:background="?android:attr/selectableItemBackground"
-    android:paddingBottom="@dimen/row_padding_vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/row_padding_vertical">
+    android:paddingBottom="@dimen/spacing_small"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin"
+    >
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:textColor="@color/list_row_title"
-        android:textSize="@dimen/list_row_title"/>
+        style="@style/ListRowTitle"
+        />
 
-    <!--TODO delete/edit buttons-->
+    <!--TODO delete/edit buttons -->
 
 </RelativeLayout>

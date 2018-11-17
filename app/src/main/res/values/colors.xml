@@ -12,4 +12,6 @@
 
     <!-- Other colors -->
     <color name="bright_red">#d50000</color>
+
+    <color name="transparent">#00000000</color>
 </resources>

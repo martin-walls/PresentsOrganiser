@@ -2,22 +2,25 @@
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:padding="@dimen/activity_margin"
+        >
 
         <TextView
             android:id="@+id/tv_sort_by"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:text="@string/dialog_title_sort_names_by"
-            android:layout_alignParentLeft="true"
             android:paddingBottom="16dp"
-            android:textSize="18sp"/>
-
+            android:textSize="18sp"
+            />
+<!-- TODO move import export to nav drawer, delete this -->
         <RadioGroup
             android:id="@+id/radio_sort_by"
             android:layout_width="match_parent"

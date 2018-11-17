@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/row_padding_vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/row_padding_vertical"
+    android:paddingBottom="@dimen/spacing_small"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin"
     android:background="?android:attr/selectableItemBackground">
 
     <!-- TODO make one for presents activity -->
@@ -17,76 +17,41 @@
         android:id="@+id/year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/list_section_header"
-        android:textStyle="bold" />
+        style="@style/ListSectionHeader"
+        />
 
     <TextView
         android:id="@+id/present"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/list_row_title"
-        android:textSize="@dimen/list_row_title"
-        android:textStyle="bold"
+        android:layout_marginStart="@dimen/inset_large"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:layout_alignBaseline="@id/year"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/list_row_inset"
-        android:layout_marginRight="8dp"
-        android:layout_marginVertical="4dp"/>
+        style="@style/ListRowTitle"
+        />
 
     <TextView
         android:id="@+id/recipient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/list_row_title"
+        android:layout_toEndOf="@id/present"
+        android:layout_toStartOf="@id/img_bought"
         android:layout_alignBaseline="@id/present"
-        android:layout_toRightOf="@id/present"
-        android:layout_toLeftOf="@id/img_bought"
-        android:layout_marginRight="4dp"
-        android:layout_marginVertical="4dp"/>
+        android:layout_marginEnd="@dimen/spacing_tiny"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginBottom="@dimen/spacing_tiny"
+        style="@style/ListRowInfo"
+        />
 
     <ImageView
         android:id="@+id/img_bought"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/round_done_24_dark"
-        android:layout_alignParentRight="true"/>
-
-    <!--<CheckBox-->
-        <!--android:id="@+id/bought"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignBaseline="@id/present"-->
-        <!--android:layout_alignParentRight="true"/>-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/notes"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="@color/list_row_content"-->
-        <!--android:textSize="@dimen/list_row_notes"-->
-        <!--android:layout_below="@id/present"-->
-        <!--android:layout_alignLeft="@id/present"-->
-        <!--android:layout_marginVertical="4dp"/>-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/bought_label"-->
-        <!--android:text="@string/isBought"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="@color/list_row_content"-->
-        <!--android:textSize="@dimen/list_row_title"-->
-        <!--android:layout_below="@id/notes"-->
-        <!--android:layout_alignLeft="@id/notes"-->
-        <!--android:layout_marginVertical="4dp"/>-->
-
-    <!--<CheckBox-->
-        <!--android:id="@+id/bought"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignBaseline="@id/bought_label"-->
-        <!--android:layout_toRightOf="@id/bought_label"/>-->
+        android:layout_alignParentEnd="true"
+        app:srcCompat="@drawable/round_done_24"
+        />
 
 </RelativeLayout>

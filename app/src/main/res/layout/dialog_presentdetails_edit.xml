@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_margin"
-    android:paddingRight="@dimen/activity_margin"
-    >
+    android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/input_name"
-        >
-
-        <AutoCompleteTextView
-            android:id="@+id/recipient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_recipient_name"
-            android:inputType="textCapSentences"
-            android:imeOptions="actionNext"
-            style="@style/DialogEditText"
-            />
-    </android.support.design.widget.TextInputLayout>
-
-    <NumberPicker
-        android:id="@+id/yearPicker"
+    <TextView
+        android:id="@+id/present"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_toStartOf="@id/btn_delete"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="8dp"
+        style="@style/DialogTitle"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/spacing_tiny"
+        style="@style/ButtonDelete"
+        />
+
+    <TextView
+        android:id="@+id/recipient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/present"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        style="@style/DialogExtraInfo"
         />
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_present"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/recipient"
         >
 
         <EditText
-            android:id="@+id/present"
+            android:id="@+id/edit_present"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_present"
@@ -49,12 +50,14 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/input_present"
         >
 
         <EditText
-            android:id="@+id/notes"
+            android:id="@+id/edit_notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_notes"
@@ -65,19 +68,22 @@
     </android.support.design.widget.TextInputLayout>
 
     <CheckBox
-        android:id="@+id/bought"
-        android:layout_width="match_parent"
+        android:id="@+id/checkbox_bought"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/input_notes"
         android:text="@string/checkbox_bought"
         style="@style/DialogCheckbox"
         />
 
     <CheckBox
-        android:id="@+id/sent"
-        android:layout_width="match_parent"
+        android:id="@+id/checkbox_sent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/checkbox_bought"
+        android:layout_alignBaseline="@id/checkbox_bought"
         android:text="@string/checkbox_sent"
         style="@style/DialogCheckbox"
         />
 
-</LinearLayout>
+</RelativeLayout>

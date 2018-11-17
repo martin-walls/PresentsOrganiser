@@ -43,4 +43,52 @@
         <item name="android:textSize">@dimen/font_large</item>
     </style>
 
+    <style name="DialogEditText">
+        <item name="android:layout_marginTop">@dimen/spacing_small</item>
+        <item name="android:layout_marginStart">@dimen/spacing_tiny</item>
+        <item name="android:layout_marginEnd">@dimen/spacing_tiny</item>
+    </style>
+
+    <style name="DialogCheckbox">
+        <item name="android:layout_marginTop">@dimen/spacing_normal</item>
+        <item name="android:layout_marginStart">@dimen/spacing_small</item>
+    </style>
+
+    <style name="MessageText">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="WarningText">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textColor">@color/bright_red</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DialogTitle">
+        <item name="android:textSize">@dimen/font_larger</item>
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DialogInfo">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="DialogExtraInfo">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textColor">@color/medium_grey</item>
+    </style>
+
+    <style name="ButtonEdit">
+        <item name="app:srcCompat">@drawable/round_edit_24</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <style name="ButtonDelete">
+        <item name="app:srcCompat">@drawable/round_delete_24</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
 </resources>

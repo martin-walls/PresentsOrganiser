@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin"
+    android:paddingTop="@dimen/activity_margin">
+
+    <include
+        layout="@layout/dialog_presentdetails_view"
+        android:id="@+id/non_edit_view"
+        />
+
+    <include
+        layout="@layout/dialog_presentdetails_edit"
+        android:id="@+id/edit_view"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

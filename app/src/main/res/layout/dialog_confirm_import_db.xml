@@ -4,22 +4,24 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/activity_horizontal_margin"
-    android:paddingVertical="@dimen/activity_vertical_margin">
+    android:paddingStart="@dimen/activity_margin"
+    android:paddingEnd="@dimen/activity_margin"
+    android:paddingTop="@dimen/activity_margin"
+    android:paddingBottom="@dimen/activity_margin"
+    >
 
     <TextView
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/dialog_text_size"
-        android:textColor="@color/list_row_title"/>
+        style="@style/MessageText"
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/warning_text"
-        android:textSize="@dimen/dialog_text_size"
-        android:textStyle="bold"
-        android:text="@string/dialog_warning_data_overwrite"/>
+        android:text="@string/dialog_warning_data_overwrite"
+        style="@style/WarningText"
+        />
 
 </LinearLayout>
