@@ -12,6 +12,7 @@
     android:paddingTop="@dimen/row_padding_vertical"
     android:background="?android:attr/selectableItemBackground">
 
+    <!-- TODO make one for presents activity -->
     <TextView
         android:id="@+id/year"
         android:layout_width="wrap_content"

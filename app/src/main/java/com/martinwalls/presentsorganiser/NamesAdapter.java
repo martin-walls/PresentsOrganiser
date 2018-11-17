@@ -46,7 +46,7 @@ public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.MyViewHolder
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.name_list_row, parent, false);
+                .inflate(R.layout.row_name, parent, false);
 
         return new MyViewHolder(itemView);
     }

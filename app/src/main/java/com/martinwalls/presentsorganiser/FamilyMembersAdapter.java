@@ -37,7 +37,7 @@ public class FamilyMembersAdapter extends RecyclerView.Adapter<FamilyMembersAdap
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.member_view_row, parent, false);
+                .inflate(R.layout.row_member, parent, false);
 
         return new MyViewHolder(itemView);
     }

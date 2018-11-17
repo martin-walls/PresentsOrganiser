@@ -61,7 +61,7 @@ public class GivenPresentsAdapter extends RecyclerView.Adapter<GivenPresentsAdap
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.present_list_row, parent, false);
+                .inflate(R.layout.row_present, parent, false);
         return new ItemViewHolder(itemView);
     }
 
