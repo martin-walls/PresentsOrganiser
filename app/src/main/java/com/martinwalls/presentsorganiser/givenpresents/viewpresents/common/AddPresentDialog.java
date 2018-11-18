@@ -24,11 +24,13 @@ import java.util.List;
 
 public class AddPresentDialog extends DialogFragment {
     addPresentDialogListener listener;
+    public static final String ARG_FAMILY_NAME = "FAMILY_NAME";
+
     private Family family = new Family();
     private boolean showNameField = false;
     private List<Person> selectedMembers = new ArrayList<>();
 
-    public static final String ARG_FAMILY_NAME = "FAMILY_NAME";
+    private boolean[] checkedMembers;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class AddPresentDialog extends DialogFragment {
         Button btnRecipients = addPresentView.findViewById(R.id.btn_select_recipients);
         if (showNameField) {
             // set up name multi choice dialog
+            checkedMembers = new boolean[family.getFamilyMembers().size()];
             btnRecipients.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,8 +102,6 @@ public class AddPresentDialog extends DialogFragment {
 
         final String[] namesArray = names.toArray(new String[0]);
 
-        final boolean[] checkedMembers = new boolean[members.size()];
-
         builder.setMultiChoiceItems(namesArray, checkedMembers, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -117,8 +118,13 @@ public class AddPresentDialog extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 for (int i = 0; i < names.size(); i++) {
                     boolean checked = checkedMembers[i];
-                    if (checked) {
-                        selectedMembers.add(members.get(i));
+                    Person person = members.get(i);
+                    if (checked && !selectedMembers.contains(person)) {
+                        selectedMembers.add(person);
+                    } else if (!checked) {
+                        if (selectedMembers.contains(person)) {
+                            selectedMembers.remove(person);
+                        }
                     }
                 }
             }

@@ -219,33 +219,41 @@ public class FamilyViewActivity extends AppCompatActivity
 
         final DBHandler dbHandler = new DBHandler(this);
 
-        Person recipient = dbHandler.loadPerson(
-                dbHandler.loadPersonId(recipientName.getText().toString(), family.getFamilyName()));
-        final GivenPresent newPresent = new GivenPresent(year, recipient,
-                present.getText().toString(), notes.getText().toString(),
-                bought.isChecked(), sent.isChecked());
+        for (Person person : selectedMembers) {
+
+//            Person recipient = dbHandler.loadPerson(
+//                    dbHandler.loadPersonId(recipientName.getText().toString(), family.getFamilyName()));
+            final GivenPresent newPresent = new GivenPresent(year, person,
+                    present.getText().toString(), notes.getText().toString(),
+                    bought.isChecked(), sent.isChecked());
 
 
-        if (dbHandler.isPresentAlreadyGiven(newPresent)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("You have already given this present before. Are you sure you want to continue?");
-            builder.setPositiveButton(R.string.dialog_add_anyway, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    addPresentToDb(newPresent);
-                }
-            });
-            builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            builder.show();
-        } else if (newPresent.getPresent().trim().isEmpty()) {
-            Toast.makeText(this, "Invalid present name", Toast.LENGTH_SHORT).show();
-        } else {
-            addPresentToDb(newPresent);
+            if (dbHandler.isPresentAlreadyGiven(newPresent)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("You have already given this present before. Are you sure you want to continue?");
+                builder.setPositiveButton(R.string.dialog_add_anyway, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        addPresentToDb(newPresent);
+                        loadPresents();
+                    }
+                });
+                builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            } else if (newPresent.getPresent().trim().isEmpty()) {
+                Toast.makeText(this, "Invalid present name", Toast.LENGTH_SHORT).show();
+            } else {
+                addPresentToDb(newPresent);
+            }
+        }
+
+        if (selectedMembers.size() == 0) {
+            Toast.makeText(this, "You must select at least one person", Toast.LENGTH_SHORT).show();
         }
 
         loadPresents();
