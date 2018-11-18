@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".givenpresents.viewpresents.pendingpresents.PendingPendingPresentsActivity"
-    tools:showIn="@layout/activity_presents"
+    tools:showIn="@layout/activity_pending_presents"
     >
 
     <com.martinwalls.presentsorganiser.ui.CustomRecyclerView
@@ -22,7 +22,7 @@
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
         android:text="@string/no_presents"
         style="@style/EmptyListView"
         />

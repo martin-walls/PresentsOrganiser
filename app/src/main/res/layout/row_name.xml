@@ -7,8 +7,8 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/spacing_small"
-    android:paddingTop="@dimen/spacing_small"
+    android:paddingBottom="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_normal"
     android:paddingLeft="@dimen/activity_margin"
     android:paddingRight="@dimen/activity_margin">
 
@@ -29,8 +29,19 @@
         android:layout_alignBaseline="@id/letter"
         android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/inset_normal"
+        android:layout_toStartOf="@id/info"
         tools:text="A name"
         style="@style/ListRowTitle"
+        />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/name"
+        android:layout_alignParentEnd="true"
+        tools:text="2 People"
+        style="@style/ListRowInfo"
         />
 
 </RelativeLayout>
