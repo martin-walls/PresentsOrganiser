@@ -11,6 +11,8 @@
     <string name="nav_unbought">Unbought presents</string>
     <string name="nav_unsent">Unsent presents</string>
     <string name="nav_received_presents">Received presents</string>
+    <string name="nav_export_db">Export database</string>
+    <string name="nav_import_db">Import database</string>
 
     <!-- Menu bar icon titles -->
     <string name="action_search">Search</string>

@@ -1,1 +1,3 @@
 added SENT feature
+added show unbought / unsent presents
+redesigned ui w/ nav bar

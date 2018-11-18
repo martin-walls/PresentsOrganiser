@@ -5,10 +5,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -30,7 +28,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -172,9 +169,6 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
             return true;
-        } else if (id == R.id.action_settings) {
-            bottomSettingsDialog();
-            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -196,6 +190,10 @@ public class MainActivity extends AppCompatActivity
             showUnboughtPresents();
         } else if (id == R.id.nav_unsent) {
             showUnsentPresents();
+        } else if (id == R.id.nav_export_db) {
+            exportDB();
+        } else if (id == R.id.nav_import_db) {
+            importDBConfirmDialog();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -288,64 +286,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void bottomSettingsDialog() {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_bottom_main, null);
-        RadioGroup radioGroup = dialogView.findViewById(R.id.radio_sort_by);
-        switch (SORTBY) {
-            case SORTBY_FAMILY:
-                radioGroup.check(R.id.radio_family);
-                break;
-            case SORTBY_NAME:
-                radioGroup.check(R.id.radio_name);
-                break;
-        }
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                switch (checkedId) {
-                    case R.id.radio_family:
-                        editor.putInt(getString(R.string.key_sort_names_by), SORTBY_FAMILY);
-                        editor.commit();
-                        loadFamilies();
-                        break;
-                    case R.id.radio_name:
-                        editor.putInt(getString(R.string.key_sort_names_by), SORTBY_NAME);
-                        editor.commit();
-                        loadNames();
-                        break;
-                }
-                bottomSheetDialog.dismiss();
-            }
-        });
-
-        TextView tvExportDb = dialogView.findViewById(R.id.export_db);
-        tvExportDb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                exportDB();
-                bottomSheetDialog.dismiss();
-            }
-        });
-
-        TextView tvImportDb = dialogView.findViewById(R.id.import_db);
-        tvImportDb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                importDBConfirmDialog();
-                bottomSheetDialog.dismiss();
-                loadData();
-            }
-        });
-
-
-        bottomSheetDialog.setContentView(dialogView);
-
-        bottomSheetDialog.show();
-    }
-
     private void exportDB() {
         DBHandler dbHandler = new DBHandler(this);
         boolean result = dbHandler.exportDB();
@@ -381,6 +321,7 @@ public class MainActivity extends AppCompatActivity
         boolean result = dbHandler.importDB();
         Toast.makeText(this, result ? "Success" : "Error importing database. File must be in Download folder.",
                 Toast.LENGTH_SHORT).show();
+        loadData();
     }
 
     private void addNameDialog(final View view) {

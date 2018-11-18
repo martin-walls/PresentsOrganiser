@@ -28,8 +28,6 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO export / import database to file
-
 public class DBHandler extends SQLiteOpenHelper {
     private static int DATABASE_VERSION = 2;
     public static String DATABASE_NAME = "presentsDB.db";
