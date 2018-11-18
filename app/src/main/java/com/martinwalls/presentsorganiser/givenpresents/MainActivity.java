@@ -281,7 +281,12 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void showUnsentPresents() {}
+    private void showUnsentPresents() {
+        Intent intent = new Intent(this, PendingPendingPresentsActivity.class);
+        intent.putExtra(PendingPendingPresentsActivity.PRESENTS_TO_SHOW, PendingPendingPresentsActivity.UNSENT);
+
+        startActivity(intent);
+    }
 
     private void bottomSettingsDialog() {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);

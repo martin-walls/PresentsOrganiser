@@ -31,8 +31,8 @@ public class PendingPendingPresentsActivity extends AppCompatActivity
         DetailsDialog.DetailsDialogListener {
 
     public static String PRESENTS_TO_SHOW = "com.martinwalls.PRESENTS_TO_SHOW";
-    public static int UNBOUGHT = 1;
-    public static int UNSENT = 2;
+    public static int UNBOUGHT = 0;
+    public static int UNSENT = 1;
 
 
     private List<GivenPresent> presentList = new ArrayList<>();
