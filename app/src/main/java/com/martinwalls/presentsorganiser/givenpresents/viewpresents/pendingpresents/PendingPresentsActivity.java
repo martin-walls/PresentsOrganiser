@@ -110,7 +110,7 @@ public class PendingPresentsActivity extends AppCompatActivity
 
 
             // check if any values have changed else don't update
-            if (present.hasChanged(newPresent, newNotes, newBought, newSent)) {
+            if (!present.isEqual(newPresent, newNotes, newBought, newSent)) {
 
                 present.setPresent(newPresent);
                 present.setNotes(newNotes);

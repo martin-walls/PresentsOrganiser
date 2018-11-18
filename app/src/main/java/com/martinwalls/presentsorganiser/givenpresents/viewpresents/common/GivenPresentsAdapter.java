@@ -13,8 +13,8 @@ import com.martinwalls.presentsorganiser.R;
 import java.util.List;
 
 public class GivenPresentsAdapter extends RecyclerView.Adapter<GivenPresentsAdapter.ItemViewHolder> {
-    public static final int SECTION_VIEW = 0;
-    public static final int CONTENT_VIEW = 1;
+    private static final int SECTION_VIEW = 0;
+    private static final int CONTENT_VIEW = 1;
 
     private List<GivenPresent> presentList;
     private GivenPresentsAdapterListener listener;
@@ -76,6 +76,8 @@ public class GivenPresentsAdapter extends RecyclerView.Adapter<GivenPresentsAdap
             return CONTENT_VIEW;
         }
     }
+
+    //TODO group same present given to multiple people -- check if presents are equals w/
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {

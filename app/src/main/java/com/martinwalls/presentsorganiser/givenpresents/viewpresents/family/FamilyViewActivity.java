@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//TODO add events to add presents for -- xmas / bday -- dropdown? -- new db col?
+//TODO add events to add presents for -- xmas / birthday -- dropdown? -- new db col?
 //TODO group same presents for people
 
 public class FamilyViewActivity extends AppCompatActivity
@@ -53,7 +53,6 @@ public class FamilyViewActivity extends AppCompatActivity
         ViewMembersDialog.ViewMembersDialogListener {
 
     private List<GivenPresent> presentList = new ArrayList<>();
-    private CustomRecyclerView recyclerView;
     private GivenPresentsAdapter givenPresentsAdapter;
     private Family family;
 
@@ -73,7 +72,7 @@ public class FamilyViewActivity extends AppCompatActivity
         family = dbHandler.loadFamily(familyName);
         getSupportActionBar().setTitle(family.getFamilyName());
 
-        recyclerView = findViewById(R.id.recycler_view);
+        CustomRecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setEmptyView(findViewById(R.id.empty));
         givenPresentsAdapter = new GivenPresentsAdapter(presentList, this, true);
         // load presents
@@ -310,7 +309,7 @@ public class FamilyViewActivity extends AppCompatActivity
             boolean newSent = cbSent.isChecked();
 
             // check if any values have changed else don't update
-            if (present.hasChanged(newPresent, newNotes, newBought, newSent)) {
+            if (!present.isEqual(newPresent, newNotes, newBought, newSent)) {
 
                 present.setPresent(newPresent);
                 present.setNotes(newNotes);
