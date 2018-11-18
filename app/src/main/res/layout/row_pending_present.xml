@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
@@ -12,38 +13,30 @@
     android:paddingRight="@dimen/activity_margin"
     android:background="?android:attr/selectableItemBackground">
 
-    <!-- TODO make one for presents activity -->
     <TextView
-        android:id="@+id/year"
+        android:id="@+id/recipient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        style="@style/ListSectionHeader"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginBottom="@dimen/spacing_tiny"
+        tools:text="Recipient"
+        style="@style/ListRowInfo"
         />
 
     <TextView
         android:id="@+id/present"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/inset_large"
+        android:layout_toEndOf="@id/recipient"
         android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_tiny"
         android:layout_marginBottom="@dimen/spacing_tiny"
-        android:layout_alignBaseline="@id/year"
-        style="@style/ListRowTitle"
-        />
-
-    <TextView
-        android:id="@+id/recipient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/present"
+        android:layout_alignBaseline="@id/recipient"
         android:layout_toStartOf="@id/img_bought"
-        android:layout_alignBaseline="@id/present"
-        android:layout_marginEnd="@dimen/spacing_tiny"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:layout_marginBottom="@dimen/spacing_tiny"
-        style="@style/ListRowInfo"
+        tools:text="A present"
+        style="@style/ListRowTitle"
         />
 
     <ImageView

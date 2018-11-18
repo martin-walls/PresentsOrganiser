@@ -20,12 +20,11 @@ public class PendingPresentsAdapter extends RecyclerView.Adapter<PendingPresents
     private PendingPresentsAdapterListener listener;
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        public TextView year, present, recipient;
+        public TextView present, recipient;
         public ImageView bought;
 
         public ItemViewHolder(View view) {
             super(view);
-            year = view.findViewById(R.id.year);
             present = view.findViewById(R.id.present);
             recipient = view.findViewById(R.id.recipient);
             bought = view.findViewById(R.id.img_bought);
@@ -55,7 +54,7 @@ public class PendingPresentsAdapter extends RecyclerView.Adapter<PendingPresents
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_present, parent, false);
+                .inflate(R.layout.row_pending_present, parent, false);
         return new ItemViewHolder(itemView);
     }
 
@@ -73,7 +72,6 @@ public class PendingPresentsAdapter extends RecyclerView.Adapter<PendingPresents
 
         if (getItemViewType(position) == SECTION_VIEW) {
             GivenPresent present = presentList.get(position);
-            holder.year.setText(String.valueOf(present.getYear()));
             holder.present.setText(present.getPresent());
             holder.recipient.setText(present.getRecipient().getName());
             holder.bought.setVisibility(present.isBought() ? View.VISIBLE : View.GONE);
