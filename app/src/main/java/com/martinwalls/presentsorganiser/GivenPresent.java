@@ -129,4 +129,16 @@ public class GivenPresent implements Comparable<GivenPresent> {
         // to sort ascending by year
         return Integer.valueOf(present.getYear()).compareTo(Integer.valueOf(this.getYear()));
     }
+
+    public boolean hasChanged(String newPresent, String newNotes,
+                           boolean newBought, boolean newSent) {
+        boolean hasChanged = false;
+        if (!present.equals(newPresent)
+            || !notes.equals(newNotes)
+            || isBought != newBought
+            || isSent != newSent) {
+            hasChanged = true;
+        }
+        return hasChanged;
+    }
 }

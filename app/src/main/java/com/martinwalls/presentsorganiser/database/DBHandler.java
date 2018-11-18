@@ -15,6 +15,7 @@ import com.martinwalls.presentsorganiser.BuildConfig;
 import com.martinwalls.presentsorganiser.Family;
 import com.martinwalls.presentsorganiser.GivenPresent;
 import com.martinwalls.presentsorganiser.Person;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.pendingpresents.PendingPresentsActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -410,10 +411,11 @@ public class DBHandler extends SQLiteOpenHelper {
         return present;
     }
 
-    public List<GivenPresent> loadUnboughtPresents() {
+    public List<GivenPresent> loadPendingPresents(int presentsToLoad) {
         List<GivenPresent> presentList = new ArrayList<>();
+        String columnToGet = presentsToLoad == PendingPresentsActivity.UNBOUGHT ? COLUMN_BOUGHT : COLUMN_SENT;
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
-                " WHERE " + COLUMN_BOUGHT + " = 0";
+                " WHERE " + columnToGet + " = 0 OR " + columnToGet + " IS NULL";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
@@ -430,6 +432,8 @@ public class DBHandler extends SQLiteOpenHelper {
                     person, presentName, notes, isBought, isSent);
             presentList.add(present);
         }
+        cursor.close();
+        db.close();
         return presentList;
     }
 

@@ -50,7 +50,7 @@
                 android:value=".givenpresents.MainActivity" />
         </activity>
         <activity
-            android:name=".givenpresents.viewpresents.pendingpresents.PendingPendingPresentsActivity"
+            android:name=".givenpresents.viewpresents.pendingpresents.PendingPresentsActivity"
             android:label="@string/title_activity_presents"
             android:parentActivityName=".givenpresents.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

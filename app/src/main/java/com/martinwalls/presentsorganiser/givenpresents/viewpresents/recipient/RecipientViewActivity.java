@@ -306,8 +306,7 @@ public class RecipientViewActivity extends AppCompatActivity
             boolean newSent = cbSent.isChecked();
 
             // check if any values have changed else don't update
-            if (!(newPresent.equals(present.getPresent()) && newNotes.equals(present.getNotes())
-                    && newBought == present.isBought())) {
+            if (present.hasChanged(newPresent, newNotes, newBought, newSent)) {
 
                 present.setPresent(newPresent);
                 present.setNotes(newNotes);

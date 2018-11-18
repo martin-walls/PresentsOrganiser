@@ -39,7 +39,7 @@ import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
 import com.martinwalls.presentsorganiser.database.DBHandler;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.family.FamilyViewActivity;
-import com.martinwalls.presentsorganiser.givenpresents.viewpresents.pendingpresents.PendingPendingPresentsActivity;
+import com.martinwalls.presentsorganiser.givenpresents.viewpresents.pendingpresents.PendingPresentsActivity;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.recipient.RecipientViewActivity;
 import com.martinwalls.presentsorganiser.ui.CustomRecyclerView;
 import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
@@ -275,15 +275,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showUnboughtPresents() {
-        Intent intent = new Intent(this, PendingPendingPresentsActivity.class);
-        intent.putExtra(PendingPendingPresentsActivity.PRESENTS_TO_SHOW, PendingPendingPresentsActivity.UNBOUGHT);
+        Intent intent = new Intent(this, PendingPresentsActivity.class);
+        intent.putExtra(PendingPresentsActivity.PRESENTS_TO_SHOW, PendingPresentsActivity.UNBOUGHT);
 
         startActivity(intent);
     }
 
     private void showUnsentPresents() {
-        Intent intent = new Intent(this, PendingPendingPresentsActivity.class);
-        intent.putExtra(PendingPendingPresentsActivity.PRESENTS_TO_SHOW, PendingPendingPresentsActivity.UNSENT);
+        Intent intent = new Intent(this, PendingPresentsActivity.class);
+        intent.putExtra(PendingPresentsActivity.PRESENTS_TO_SHOW, PendingPresentsActivity.UNSENT);
 
         startActivity(intent);
     }

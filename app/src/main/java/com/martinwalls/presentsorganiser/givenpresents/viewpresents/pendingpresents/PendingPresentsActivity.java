@@ -26,7 +26,7 @@ import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PendingPendingPresentsActivity extends AppCompatActivity
+public class PendingPresentsActivity extends AppCompatActivity
         implements PendingPresentsAdapter.PendingPresentsAdapterListener,
         DetailsDialog.DetailsDialogListener {
 
@@ -74,7 +74,11 @@ public class PendingPendingPresentsActivity extends AppCompatActivity
     private void loadPresents() {
         DBHandler dbHandler = new DBHandler(this);
         presentList.clear();
-        presentList.addAll(dbHandler.loadUnboughtPresents());
+        if (presentsToShow == UNBOUGHT) {
+            presentList.addAll(dbHandler.loadPendingPresents(UNBOUGHT));
+        } else if (presentsToShow == UNSENT) {
+            presentList.addAll(dbHandler.loadPendingPresents(UNSENT));
+        }
         pendingPresentsAdapter.notifyDataSetChanged();
     }
 
@@ -104,9 +108,9 @@ public class PendingPendingPresentsActivity extends AppCompatActivity
             boolean newBought = cbBought.isChecked();
             boolean newSent = cbSent.isChecked();
 
+
             // check if any values have changed else don't update
-            if (!(newPresent.equals(present.getPresent()) && newNotes.equals(present.getNotes())
-                    && newBought == present.isBought())) {
+            if (present.hasChanged(newPresent, newNotes, newBought, newSent)) {
 
                 present.setPresent(newPresent);
                 present.setNotes(newNotes);
