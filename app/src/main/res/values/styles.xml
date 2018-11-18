@@ -26,7 +26,7 @@
 
     <style name="ListSectionHeader">
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textSize">@dimen/font_larger</item>
         <item name="android:textStyle">bold</item>
     </style>
 

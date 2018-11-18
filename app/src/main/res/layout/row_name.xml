@@ -21,6 +21,7 @@
         tools:text="A"
         style="@style/ListSectionHeader"
         />
+<!-- TODO centre letter vertically with others -->
 
     <TextView
         android:id="@+id/name"
