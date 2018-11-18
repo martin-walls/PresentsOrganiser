@@ -209,10 +209,9 @@ public class FamilyViewActivity extends AppCompatActivity
     }
 
     @Override
-    public void onAddPresentDialogPositiveClick(DialogFragment dialog) {
+    public void onAddPresentDialogPositiveClick(DialogFragment dialog, List<Person> selectedMembers) {
         NumberPicker yearPicker = dialog.getDialog().findViewById(R.id.yearPicker);
         int year = yearPicker.getValue();
-        EditText recipientName = dialog.getDialog().findViewById(R.id.recipient);
         EditText present = dialog.getDialog().findViewById(R.id.present);
         EditText notes = dialog.getDialog().findViewById(R.id.notes);
         CheckBox bought = dialog.getDialog().findViewById(R.id.bought);

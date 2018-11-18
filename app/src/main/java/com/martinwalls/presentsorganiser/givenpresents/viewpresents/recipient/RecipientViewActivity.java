@@ -213,7 +213,7 @@ public class RecipientViewActivity extends AppCompatActivity
     }
 
     @Override
-    public void onAddPresentDialogPositiveClick(DialogFragment dialog) {
+    public void onAddPresentDialogPositiveClick(DialogFragment dialog, List<Person> selectedMembers) {
         NumberPicker yearPicker = dialog.getDialog().findViewById(R.id.yearPicker);
         int year = yearPicker.getValue();
         EditText present = dialog.getDialog().findViewById(R.id.present);

@@ -8,8 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.NumberPicker;
 
 import com.martinwalls.presentsorganiser.Family;
@@ -27,6 +26,7 @@ public class AddPresentDialog extends DialogFragment {
     addPresentDialogListener listener;
     private Family family = new Family();
     private boolean showNameField = false;
+    private List<Person> selectedMembers = new ArrayList<>();
 
     public static final String ARG_FAMILY_NAME = "FAMILY_NAME";
 
@@ -39,7 +39,7 @@ public class AddPresentDialog extends DialogFragment {
             showNameField = true;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         // inflate and set layout for dialog
@@ -48,26 +48,17 @@ public class AddPresentDialog extends DialogFragment {
         builder.setView(addPresentView);
         builder.setTitle("Add present");
 
-        final AutoCompleteTextView etName = addPresentView.findViewById(R.id.recipient);
+        Button btnRecipients = addPresentView.findViewById(R.id.btn_select_recipients);
         if (showNameField) {
-            // set up name autocomplete
-            List<Person> membersList = family.getFamilyMembers();
-            List<String> memberNames = new ArrayList<>();
-            for (Person person : membersList) {
-                memberNames.add(person.getName());
-            }
-            ArrayAdapter<String> adapter =
-                    new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, memberNames);
-            etName.setAdapter(adapter);
-            etName.setThreshold(1);
-            etName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            // set up name multi choice dialog
+            btnRecipients.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    etName.showDropDown();
+                public void onClick(View v) {
+                    selectRecipientsDialog();
                 }
             });
         } else {
-            etName.setVisibility(View.GONE);
+            btnRecipients.setVisibility(View.GONE);
         }
 
         // set up year selector wheel;
@@ -84,7 +75,7 @@ public class AddPresentDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // send positive click event
-                        listener.onAddPresentDialogPositiveClick(AddPresentDialog.this);
+                        listener.onAddPresentDialogPositiveClick(AddPresentDialog.this, selectedMembers);
                     }
                 })
                 .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -97,8 +88,53 @@ public class AddPresentDialog extends DialogFragment {
         return builder.create();
     }
 
+    private void selectRecipientsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        final List<Person> members = family.getFamilyMembers();
+        final List<String> names = new ArrayList<>();
+        for (Person person : members) {
+            names.add(person.getName());
+        }
+
+        final String[] namesArray = names.toArray(new String[0]);
+
+        final boolean[] checkedMembers = new boolean[members.size()];
+
+        builder.setMultiChoiceItems(namesArray, checkedMembers, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                // update current focused item's checked status
+                checkedMembers[which] = isChecked;
+            }
+        });
+
+        builder.setCancelable(false);
+        builder.setTitle("Select recipients");
+
+        builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for (int i = 0; i < names.size(); i++) {
+                    boolean checked = checkedMembers[i];
+                    if (checked) {
+                        selectedMembers.add(members.get(i));
+                    }
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
     public interface addPresentDialogListener {
-        void onAddPresentDialogPositiveClick(DialogFragment dialog);
+        void onAddPresentDialogPositiveClick(DialogFragment dialog, List<Person> selectedMembers);
     }
 
     @Override
