@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     public static final int SORTBY_FAMILY = 1;
     public static final int SORTBY_NAME = 2;
 
-    private int SORTBY = SORTBY_FAMILY;
+    private int SORTMODE = SORTBY_FAMILY;
 
     public static final String RECIPIENT_ID = "com.martinwalls.presentsorganiser.RECIPIENT_ID";
     public static final String FAMILY_NAME = "com.martinwalls.presentsorganiser.FAMILY_NAME";
@@ -145,14 +145,22 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // filter recycler view when query submitted
-                namesAdapter.getFilter().filter(query);
+                if (SORTMODE == SORTBY_NAME) {
+                    namesAdapter.getFilter().filter(query);
+                } else if (SORTMODE == SORTBY_FAMILY) {
+                    familyAdapter.getFilter().filter(query);
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text changes
-                namesAdapter.getFilter().filter(query);
+                if (SORTMODE == SORTBY_NAME) {
+                    namesAdapter.getFilter().filter(query);
+                } else if (SORTMODE == SORTBY_FAMILY) {
+                    familyAdapter.getFilter().filter(query);
+                }
                 return false;
             }
         });
@@ -181,10 +189,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_families_view) {
-            SORTBY = SORTBY_FAMILY;
+            SORTMODE = SORTBY_FAMILY;
             loadFamilies();
         } else if (id == R.id.nav_names_view) {
-            SORTBY = SORTBY_NAME;
+            SORTMODE = SORTBY_NAME;
             loadNames();
         } else if (id == R.id.nav_unbought) {
             showUnboughtPresents();
@@ -202,7 +210,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadData() {
-        if (SORTBY == SORTBY_FAMILY) {
+        if (SORTMODE == SORTBY_FAMILY) {
             loadFamilies();
         } else {
             loadNames();
