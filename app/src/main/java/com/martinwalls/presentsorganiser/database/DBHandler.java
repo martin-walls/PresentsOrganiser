@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
-    private static int DATABASE_VERSION = 2;
+    private static int DATABASE_VERSION = 3;
     public static String DATABASE_NAME = "presentsDB.db";
 
     private static final String TAG = DBHandler.class.getName();
@@ -50,6 +50,9 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TABLE_NAMES = "Names";
     private static final String COLUMN_PERSON_ID = "PersonId";
     private static final String COLUMN_NAME = "FirstName";
+
+    // values for presents-names table
+    private static final String TABLE_GIVEN_PRESENTS_NAMES = "GivenPresents_Names";
 
     // columns for given presents tables
     private static final String TABLE_GIVEN_PRESENTS = "GivenPresents";
@@ -76,17 +79,14 @@ public class DBHandler extends SQLiteOpenHelper {
 //        db.execSQL(CREATE_TABLE);
 
         // create presents table
-        String CREATE_PRESENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GIVEN_PRESENTS + " (" +
+        String CREATE_GIVEN_PRESENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GIVEN_PRESENTS + " (" +
                 COLUMN_PRESENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_YEAR + " INTEGER, " +
-                COLUMN_PERSON_ID + " INTEGER, " +
                 COLUMN_PRESENT + " TEXT NOT NULL, " +
                 COLUMN_NOTES + " TEXT, " +
                 COLUMN_BOUGHT + " INTEGER, " +      // 1 or 0 for boolean
-                COLUMN_SENT + " INTEGER, " +
-                "FOREIGN KEY (" + COLUMN_PERSON_ID + ") REFERENCES " +
-                TABLE_NAMES + " (" + COLUMN_PERSON_ID + ") )";
-        db.execSQL(CREATE_PRESENTS_TABLE);
+                COLUMN_SENT + " INTEGER )";
+        db.execSQL(CREATE_GIVEN_PRESENTS_TABLE);
 
         // create table of families
         String CREATE_FAMILIES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_FAMILIES + " (" +
@@ -101,6 +101,16 @@ public class DBHandler extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + COLUMN_FAMILY + ") REFERENCES " +
                 TABLE_FAMILIES + " (" + COLUMN_FAMILY + ") )";
         db.execSQL(CREATE_NAMES_TABLE);
+
+        String CREATE_GIVEN_PRESENTS_NAMES = "CREATE TABLE IF NOT EXISTS " + TABLE_GIVEN_PRESENTS_NAMES + " (" +
+                COLUMN_PRESENT_ID + " INTEGER, " +
+                COLUMN_PERSON_ID + " INTEGER, " +
+                " PRIMARY KEY (" + COLUMN_PRESENT_ID + ", " + COLUMN_PERSON_ID + ")," +
+                " FOREIGN KEY (" + COLUMN_PRESENT_ID + ") REFERENCES " +
+                TABLE_GIVEN_PRESENTS + " (" + COLUMN_PRESENT_ID + ") ON DELETE CASCADE ON UPDATE NO ACTION," +
+                " FOREIGN KEY (" + COLUMN_PERSON_ID + ") REFERENCES " +
+                TABLE_NAMES + " (" + COLUMN_PERSON_ID + ") ON DELETE CASCADE ON UPDATE NO ACTION )";
+        db.execSQL(CREATE_GIVEN_PRESENTS_NAMES);
     }
 
     @Override
@@ -581,16 +591,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return result;
     }
-
-//    private void dropTableIfNoMorePresents(String year) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String tableName = TABLE_TYPE_GIVEN + year;
-//        if (getPresentCountInYear(year) == 0) {
-//            String dropQuery = "DROP TABLE IF EXISTS " + tableName;
-//            db.execSQL(dropQuery);
-//        }
-//        db.close();
-//    }
 
     private void removeGivenPresentsForPerson(Person person) {
         List<GivenPresent> presentList = loadGivenPresents(person);

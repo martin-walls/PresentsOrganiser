@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-//TODO checkboxes for recipients rather than editText -- checkbox for "all"
-
 public class AddPresentDialog extends DialogFragment {
     addPresentDialogListener listener;
     public static final String ARG_FAMILY_NAME = "FAMILY_NAME";
