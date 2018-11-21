@@ -58,7 +58,6 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TABLE_GIVEN_PRESENTS = "GivenPresents";
     private static final String COLUMN_PRESENT_ID = "PresentId";
     private static final String COLUMN_YEAR = "Year";
-    // COLUMN_PERSON_ID
     private static final String COLUMN_PRESENT = "Present";
     private static final String COLUMN_NOTES = "Notes";
     private static final String COLUMN_BOUGHT = "Bought";
@@ -224,8 +223,6 @@ public class DBHandler extends SQLiteOpenHelper {
         return false;
     }
 
-
-
     public Family loadFamily(String familyName) {
         Family family = new Family();
         List<Person> members = loadPeopleInFamily(familyName);
@@ -348,6 +345,8 @@ public class DBHandler extends SQLiteOpenHelper {
         List<GivenPresent> presentList = new ArrayList<>();
 //        String tableName = TABLE_TYPE_GIVEN + year;
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
+                " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
                 " WHERE " + COLUMN_PERSON_ID + " = " + person.getId() +
                 " AND " + COLUMN_YEAR + " = " + year;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -361,9 +360,10 @@ public class DBHandler extends SQLiteOpenHelper {
             boolean isBought = cursor.getInt(cursor.getColumnIndex(COLUMN_BOUGHT)) != 0;
             boolean isSent = cursor.getInt(cursor.getColumnIndex(COLUMN_SENT)) != 0;
 
-
+            List<Person> personList = new ArrayList<>();
+            personList.add(person);
             GivenPresent present = new GivenPresent(year, presentId,
-                    person, presentName, notes, isBought, isSent);
+                    personList, presentName, notes, isBought, isSent);
             presentList.add(present);
         }
         cursor.close();
@@ -375,6 +375,8 @@ public class DBHandler extends SQLiteOpenHelper {
     public List<GivenPresent> loadGivenPresents(Person person) {
         List<GivenPresent> presentList = new ArrayList<>();
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
+                " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
                 " WHERE " + COLUMN_PERSON_ID + " = " + person.getId();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -386,8 +388,10 @@ public class DBHandler extends SQLiteOpenHelper {
             boolean isBought = cursor.getInt(cursor.getColumnIndex(COLUMN_BOUGHT)) != 0;
             boolean isSent = cursor.getInt(cursor.getColumnIndex(COLUMN_SENT)) != 0;
 
+            List<Person> personList = new ArrayList<>();
+            personList.add(person);
             GivenPresent present = new GivenPresent(year, presentId,
-                    person, presentName, notes, isBought, isSent);
+                    personList, presentName, notes, isBought, isSent);
             presentList.add(present);
         }
 
@@ -398,21 +402,31 @@ public class DBHandler extends SQLiteOpenHelper {
     public GivenPresent loadPresent(int presentId) {
         GivenPresent present = new GivenPresent();
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
+                " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
                 " WHERE " + COLUMN_PRESENT_ID + " = " + presentId;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             int year = cursor.getInt(cursor.getColumnIndex(COLUMN_YEAR));
-            int personId = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME));
+            int personId = cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID));
             String presentName = cursor.getString(cursor.getColumnIndex(COLUMN_PRESENT));
             String notes = cursor.getString(cursor.getColumnIndex(COLUMN_NOTES));
             boolean isBought = cursor.getInt(cursor.getColumnIndex(COLUMN_BOUGHT)) != 0;
             boolean isSent = cursor.getInt(cursor.getColumnIndex(COLUMN_SENT)) != 0;
 
             Person person = loadPerson(personId);
+            List<Person> personList = new ArrayList<>();
+            personList.add(person);
 
             present = new GivenPresent(year, presentId,
-                    person, presentName, notes, isBought, isSent);
+                    personList, presentName, notes, isBought, isSent);
+
+            while (cursor.moveToNext()) {
+                int personId1 = cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID));
+                Person person1 = loadPerson(personId1);
+                present.addRecipient(person1);
+            } // TODO got to here
         }
         cursor.close();
         db.close();
