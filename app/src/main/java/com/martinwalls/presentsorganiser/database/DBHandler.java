@@ -685,3 +685,4 @@ public class DBHandler extends SQLiteOpenHelper {
         return false;
     }
 }
+//TODO adapt rest of code to support multiple people per present etc
