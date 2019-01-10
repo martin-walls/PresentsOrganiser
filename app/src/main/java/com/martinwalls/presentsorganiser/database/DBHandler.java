@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -26,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -151,7 +153,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // to execute SQL from a file
-    private void executeSQLScript(SQLiteDatabase db, BufferedReader reader) throws IOException {
+    private void executeSQLScript(SQLiteDatabase db, @NonNull BufferedReader reader) throws IOException {
         String line;
         StringBuilder statement = new StringBuilder();
         while ((line = reader.readLine()) != null) {
@@ -212,8 +214,6 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         return false;
     }
-
-
 
     public Family loadFamily(String familyName) {
         Family family = new Family();
@@ -412,13 +412,15 @@ public class DBHandler extends SQLiteOpenHelper {
     public List<GivenPresent> loadPendingPresents(int presentsToLoad) {
         List<GivenPresent> presentList = new ArrayList<>();
         String columnToGet = presentsToLoad == PendingPresentsActivity.UNBOUGHT ? COLUMN_BOUGHT : COLUMN_SENT;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
-                " WHERE " + columnToGet + " = 0 OR " + columnToGet + " IS NULL";
+                " WHERE (" + columnToGet + " = 0 OR " + columnToGet + " IS NULL)" +
+            " AND " + COLUMN_YEAR + " = " + year;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
             int presentId = cursor.getInt(0);
-            int year = cursor.getInt(1);
+            int presentYear = cursor.getInt(1);
             int personId = cursor.getInt(2);
             Person person = loadPerson(personId);
             String presentName = cursor.getString(3);
@@ -426,7 +428,7 @@ public class DBHandler extends SQLiteOpenHelper {
             boolean isBought = cursor.getInt(5) != 0;
             boolean isSent = cursor.getInt(6) != 0;
 
-            GivenPresent present = new GivenPresent(year, presentId,
+            GivenPresent present = new GivenPresent(presentYear, presentId,
                     person, presentName, notes, isBought, isSent);
             presentList.add(present);
         }
