@@ -37,13 +37,6 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TAG = DBHandler.class.getName();
     private final Context context;
 
-    // values for table listing year tables
-//    private static final String TABLE_TABLES = "Tables";
-//    private static final String COLUMN_TABLE_NAME = "TableName";
-//    private static final String COLUMN_TABLE_TYPE = "Type";
-//    private static final String TABLE_TYPE_GIVEN = "Given";
-//    private static final String TABLE_TYPE_RECEIVED = "Received";
-
     // values for families table
     private static final String TABLE_FAMILIES = "Families";
     private static final String COLUMN_FAMILY = "Family";
@@ -234,27 +227,26 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public List<Family> loadFamilies() {
-        SQLiteDatabase db = this.getReadableDatabase();
+        List<String> familyNames = loadFamilyNames();
         List<Family> result = new ArrayList<>();
-        String query = "SELECT " + COLUMN_FAMILY + " FROM " + TABLE_FAMILIES;
-        Cursor cursor = db.rawQuery(query, null);
-        while (cursor.moveToNext()) {
-            String familyName = cursor.getString(0);
-            List<Person> familyMembers = loadPeopleInFamily(familyName);
-            Family family = new Family(familyName, familyMembers);
+        for (String familyName : familyNames) {
+            Family family = loadFamily(familyName);
             result.add(family);
         }
-        cursor.close();
-        db.close();
         return result;
     }
 
     public List<String> loadFamilyNames() {
-        List<Family> families = loadFamilies();
+        SQLiteDatabase db = this.getReadableDatabase();
         List<String> result = new ArrayList<>();
-        for (Family family : families) {
-            result.add(family.getFamilyName());
+        String query = "SELECT " + COLUMN_FAMILY + " FROM " + TABLE_FAMILIES;
+        Cursor cursor = db.rawQuery(query, null);
+        while (cursor.moveToNext()) {
+            String familyName = cursor.getString(0);
+            result.add(familyName);
         }
+        cursor.close();
+        db.close();
         return result;
     }
 
@@ -348,7 +340,8 @@ public class DBHandler extends SQLiteOpenHelper {
 //        String tableName = TABLE_TYPE_GIVEN + year;
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
                 " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
-                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " +
+                TABLE_GIVEN_PRESENTS_NAMES + "." + COLUMN_PRESENT_ID +
                 " WHERE " + COLUMN_PERSON_ID + " = " + person.getId() +
                 " AND " + COLUMN_YEAR + " = " + year;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -378,7 +371,8 @@ public class DBHandler extends SQLiteOpenHelper {
         List<GivenPresent> presentList = new ArrayList<>();
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
                 " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
-                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " +
+                TABLE_GIVEN_PRESENTS_NAMES + "." + COLUMN_PRESENT_ID +
                 " WHERE " + COLUMN_PERSON_ID + " = " + person.getId();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -405,8 +399,9 @@ public class DBHandler extends SQLiteOpenHelper {
         GivenPresent present = new GivenPresent();
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
                 " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
-                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
-                " WHERE " + COLUMN_PRESENT_ID + " = " + presentId;
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " +
+                TABLE_GIVEN_PRESENTS_NAMES + "." + COLUMN_PRESENT_ID +
+                " WHERE " + TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + presentId;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
@@ -441,7 +436,8 @@ public class DBHandler extends SQLiteOpenHelper {
         int year = Calendar.getInstance().get(Calendar.YEAR);
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
                 " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
-                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " +
+                TABLE_GIVEN_PRESENTS_NAMES + "." + COLUMN_PRESENT_ID +
                 " WHERE " + columnToGet + " = 0 OR " + columnToGet + " IS NULL" +
                 " AND " + COLUMN_YEAR + " = " + year;
         SQLiteDatabase db = this.getReadableDatabase();

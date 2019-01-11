@@ -25,13 +25,13 @@ Present TEXT NOT NULL,
 Notes TEXT,
 Bought INTEGER,
 Sent INTEGER
-)
+);
 
 INSERT INTO GivenPresents (PresentId, Year, Present, Notes, Bought, Sent)
 SELECT PresentId, Year, Present, Notes, Bought, Sent
 FROM _GivenPresents_old;
 
-DROP TABLE _GivenPresents_old
+DROP TABLE _GivenPresents_old;
 
 COMMIT;
 

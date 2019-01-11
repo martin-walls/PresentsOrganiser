@@ -220,8 +220,10 @@ public class RecipientViewActivity extends AppCompatActivity
         EditText notes = dialog.getDialog().findViewById(R.id.notes);
         CheckBox bought = dialog.getDialog().findViewById(R.id.bought);
         CheckBox sent = dialog.getDialog().findViewById(R.id.sent);
+        List<Person> recipientList = new ArrayList<>();
+        recipientList.add(recipient);
 
-        final GivenPresent newPresent = new GivenPresent(year, recipient,
+        final GivenPresent newPresent = new GivenPresent(year, recipientList,
                 present.getText().toString(), notes.getText().toString(),
                 bought.isChecked(), sent.isChecked());
 

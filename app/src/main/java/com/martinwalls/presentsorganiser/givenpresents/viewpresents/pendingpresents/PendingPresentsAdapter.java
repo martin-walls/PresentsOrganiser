@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.martinwalls.presentsorganiser.GivenPresent;
+import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
 
 import java.util.List;
@@ -73,12 +74,30 @@ public class PendingPresentsAdapter extends RecyclerView.Adapter<PendingPresents
         if (getItemViewType(position) == SECTION_VIEW) {
             GivenPresent present = presentList.get(position);
             holder.present.setText(present.getPresent());
-            holder.recipient.setText(present.getRecipient().getName());
+            // get list of recipients
+            List<Person> recipientList = present.getRecipientList();
+            StringBuilder names = new StringBuilder();
+            for (Person person : recipientList) {
+                if (names.length() > 0) {
+                    names.append(", ");
+                }
+                names.append(person.getName());
+            }
+            holder.recipient.setText(names.toString());
             holder.bought.setVisibility(present.isBought() ? View.VISIBLE : View.GONE);
         } else {
             GivenPresent present = presentList.get(position);
             holder.present.setText(present.getPresent());
-            holder.recipient.setText(present.getRecipient().getName());
+            // get list of recipients
+            List<Person> recipientList = present.getRecipientList();
+            StringBuilder names = new StringBuilder();
+            for (Person person : recipientList) {
+                if (names.length() > 0) {
+                    names.append(", ");
+                }
+                names.append(person.getName());
+            }
+            holder.recipient.setText(names.toString());
             holder.bought.setVisibility(present.isBought() ? View.VISIBLE : View.GONE);
         }
     }

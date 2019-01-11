@@ -15,8 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.martinwalls.presentsorganiser.GivenPresent;
+import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
 import com.martinwalls.presentsorganiser.database.DBHandler;
+
+import java.util.List;
 
 public class DetailsDialog extends DialogFragment {
     DetailsDialogListener listener;
@@ -66,7 +69,16 @@ public class DetailsDialog extends DialogFragment {
         // show recipient name if in family view
         TextView tvRecipientName = presentDetailsView.findViewById(R.id.recipient);
         if (showPerson) {
-            tvRecipientName.setText(present.getRecipient().getName());
+            // get list of recipients
+            List<Person> recipientList = present.getRecipientList();
+            StringBuilder names = new StringBuilder();
+            for (Person person : recipientList) {
+                if (names.length() > 0) {
+                    names.append(", ");
+                }
+                names.append(person.getName());
+            }
+            tvRecipientName.setText(names.toString());
         } else {
             tvRecipientName.setVisibility(View.GONE);
         }
@@ -124,7 +136,16 @@ public class DetailsDialog extends DialogFragment {
         TextView tvTitle = editView.findViewById(R.id.present);
         tvTitle.setText(present.getPresent());
         TextView tvRecipient = editView.findViewById(R.id.recipient);
-        tvRecipient.setText(present.getRecipient().getName());
+        // get list of recipients
+        List<Person> recipientList = present.getRecipientList();
+        StringBuilder names = new StringBuilder();
+        for (Person person : recipientList) {
+            if (names.length() > 0) {
+                names.append(", ");
+            }
+            names.append(person.getName());
+        }
+        tvRecipient.setText(names.toString());
         EditText etPresent = editView.findViewById(R.id.edit_present);
         etPresent.setText(present.getPresent());
         EditText etNotes = editView.findViewById(R.id.edit_notes);
