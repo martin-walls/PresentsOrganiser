@@ -46,7 +46,7 @@ import java.util.Collections;
 import java.util.List;
 
 //TODO show list of all presents for year -- possibly new activity?
-//TODO show list of all unbought presents (for current year)
+//TODO persisting fragment to store sortby name/family
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,

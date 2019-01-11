@@ -334,38 +334,6 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    // returns present for person for year
-    public List<GivenPresent> loadGivenPresentsFromYear(Person person, int year) {
-        List<GivenPresent> presentList = new ArrayList<>();
-//        String tableName = TABLE_TYPE_GIVEN + year;
-        String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
-                " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
-                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " +
-                TABLE_GIVEN_PRESENTS_NAMES + "." + COLUMN_PRESENT_ID +
-                " WHERE " + COLUMN_PERSON_ID + " = " + person.getId() +
-                " AND " + COLUMN_YEAR + " = " + year;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        while (cursor.moveToNext()) {
-            int presentId = cursor.getInt(cursor.getColumnIndex(COLUMN_PRESENT_ID));
-            // column 1 is year
-//            int personId = cursor.getInt(2); //Not necessary
-            String presentName = cursor.getString(cursor.getColumnIndex(COLUMN_PRESENT));
-            String notes = cursor.getString(cursor.getColumnIndex(COLUMN_NOTES));
-            boolean isBought = cursor.getInt(cursor.getColumnIndex(COLUMN_BOUGHT)) != 0;
-            boolean isSent = cursor.getInt(cursor.getColumnIndex(COLUMN_SENT)) != 0;
-
-            List<Person> personList = new ArrayList<>();
-            personList.add(person);
-            GivenPresent present = new GivenPresent(year, presentId,
-                    personList, presentName, notes, isBought, isSent);
-            presentList.add(present);
-        }
-        cursor.close();
-        db.close();
-        return presentList;
-    }
-
     // return list of presents from person from all years
     public List<GivenPresent> loadGivenPresents(Person person) {
         List<GivenPresent> presentList = new ArrayList<>();
@@ -442,7 +410,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 " AND " + COLUMN_YEAR + " = " + year;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        int lastPresentId = 0;
+        // last id makes sure the same present isn't added twice
+        // (where there is more than one recipient)
+        int lastPresentId = -1;
         while (cursor.moveToNext()) {
             int presentId = cursor.getInt(cursor.getColumnIndex(COLUMN_PRESENT_ID));
             if (lastPresentId != presentId) {
@@ -461,7 +431,7 @@ public class DBHandler extends SQLiteOpenHelper {
             } else {
                 int personId = cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID));
                 Person person = loadPerson(personId);
-                presentList.get(-1).addRecipient(person);
+                presentList.get(presentList.size()-1).addRecipient(person);
             }
 
             lastPresentId = presentId;

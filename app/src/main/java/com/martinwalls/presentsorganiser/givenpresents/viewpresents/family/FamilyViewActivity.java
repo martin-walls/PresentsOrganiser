@@ -171,7 +171,8 @@ public class FamilyViewActivity extends AppCompatActivity
         DBHandler dbHandler = new DBHandler(this);
         List<GivenPresent> presents = new ArrayList<>();
         for (Person person : family.getFamilyMembers()) {
-            presents.addAll(dbHandler.loadGivenPresents(person));
+            presents.addAll(dbHandler.loadGivenPresents(person)); //TODO group same present that's given to multiple people
+            I GOT TO HERE
         }
 
         int lastSection = 0;
