@@ -213,7 +213,7 @@ public class RecipientViewActivity extends AppCompatActivity
     }
 
     @Override
-    public void onAddPresentDialogPositiveClick(DialogFragment dialog) {
+    public void onAddPresentDialogPositiveClick(DialogFragment dialog, List<Person> selectedMembers) {
         NumberPicker yearPicker = dialog.getDialog().findViewById(R.id.yearPicker);
         int year = yearPicker.getValue();
         EditText present = dialog.getDialog().findViewById(R.id.present);
@@ -306,7 +306,7 @@ public class RecipientViewActivity extends AppCompatActivity
             boolean newSent = cbSent.isChecked();
 
             // check if any values have changed else don't update
-            if (present.hasChanged(newPresent, newNotes, newBought, newSent)) {
+            if (!present.isEqual(newPresent, newNotes, newBought, newSent)) {
 
                 present.setPresent(newPresent);
                 present.setNotes(newNotes);

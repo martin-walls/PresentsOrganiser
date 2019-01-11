@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//TODO add events to add presents for -- xmas / bday -- dropdown? -- new db col?
+//TODO add events to add presents for -- xmas / birthday -- dropdown? -- new db col?
 //TODO group same presents for people
 
 public class FamilyViewActivity extends AppCompatActivity
@@ -53,7 +53,6 @@ public class FamilyViewActivity extends AppCompatActivity
         ViewMembersDialog.ViewMembersDialogListener {
 
     private List<GivenPresent> presentList = new ArrayList<>();
-    private CustomRecyclerView recyclerView;
     private GivenPresentsAdapter givenPresentsAdapter;
     private Family family;
 
@@ -73,7 +72,7 @@ public class FamilyViewActivity extends AppCompatActivity
         family = dbHandler.loadFamily(familyName);
         getSupportActionBar().setTitle(family.getFamilyName());
 
-        recyclerView = findViewById(R.id.recycler_view);
+        CustomRecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setEmptyView(findViewById(R.id.empty));
         givenPresentsAdapter = new GivenPresentsAdapter(presentList, this, true);
         // load presents
@@ -209,10 +208,9 @@ public class FamilyViewActivity extends AppCompatActivity
     }
 
     @Override
-    public void onAddPresentDialogPositiveClick(DialogFragment dialog) {
+    public void onAddPresentDialogPositiveClick(DialogFragment dialog, List<Person> selectedMembers) {
         NumberPicker yearPicker = dialog.getDialog().findViewById(R.id.yearPicker);
         int year = yearPicker.getValue();
-        EditText recipientName = dialog.getDialog().findViewById(R.id.recipient);
         EditText present = dialog.getDialog().findViewById(R.id.present);
         EditText notes = dialog.getDialog().findViewById(R.id.notes);
         CheckBox bought = dialog.getDialog().findViewById(R.id.bought);
@@ -220,33 +218,41 @@ public class FamilyViewActivity extends AppCompatActivity
 
         final DBHandler dbHandler = new DBHandler(this);
 
-        Person recipient = dbHandler.loadPerson(
-                dbHandler.loadPersonId(recipientName.getText().toString(), family.getFamilyName()));
-        final GivenPresent newPresent = new GivenPresent(year, recipient,
-                present.getText().toString(), notes.getText().toString(),
-                bought.isChecked(), sent.isChecked());
+        for (Person person : selectedMembers) {
+
+//            Person recipient = dbHandler.loadPerson(
+//                    dbHandler.loadPersonId(recipientName.getText().toString(), family.getFamilyName()));
+            final GivenPresent newPresent = new GivenPresent(year, person,
+                    present.getText().toString(), notes.getText().toString(),
+                    bought.isChecked(), sent.isChecked());
 
 
-        if (dbHandler.isPresentAlreadyGiven(newPresent)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("You have already given this present before. Are you sure you want to continue?");
-            builder.setPositiveButton(R.string.dialog_add_anyway, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    addPresentToDb(newPresent);
-                }
-            });
-            builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            builder.show();
-        } else if (newPresent.getPresent().trim().isEmpty()) {
-            Toast.makeText(this, "Invalid present name", Toast.LENGTH_SHORT).show();
-        } else {
-            addPresentToDb(newPresent);
+            if (dbHandler.isPresentAlreadyGiven(newPresent)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("You have already given this present before. Are you sure you want to continue?");
+                builder.setPositiveButton(R.string.dialog_add_anyway, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        addPresentToDb(newPresent);
+                        loadPresents();
+                    }
+                });
+                builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            } else if (newPresent.getPresent().trim().isEmpty()) {
+                Toast.makeText(this, "Invalid present name", Toast.LENGTH_SHORT).show();
+            } else {
+                addPresentToDb(newPresent);
+            }
+        }
+
+        if (selectedMembers.size() == 0) {
+            Toast.makeText(this, "You must select at least one person", Toast.LENGTH_SHORT).show();
         }
 
         loadPresents();
@@ -303,7 +309,7 @@ public class FamilyViewActivity extends AppCompatActivity
             boolean newSent = cbSent.isChecked();
 
             // check if any values have changed else don't update
-            if (present.hasChanged(newPresent, newNotes, newBought, newSent)) {
+            if (!present.isEqual(newPresent, newNotes, newBought, newSent)) {
 
                 present.setPresent(newPresent);
                 present.setNotes(newNotes);

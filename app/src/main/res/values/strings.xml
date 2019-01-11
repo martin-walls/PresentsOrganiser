@@ -43,13 +43,12 @@
     <string name="hint_name">Name</string>
     <string name="hint_family">Family</string>
 
+    <!-- Button texts -->
+    <string name="btn_select_recipients">Select recipients</string>
+
     <!-- Checkbox label -->
     <string name="checkbox_bought">Bought</string>
     <string name="checkbox_sent">Sent</string>
-
-    <!-- Radio button labels -->
-    <string name="radio_family">Family</string>
-    <string name="radio_name">Name</string>
 
     <!-- Dialog buttons -->
     <string name="dialog_ok">OK</string>

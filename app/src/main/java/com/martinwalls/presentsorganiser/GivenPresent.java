@@ -1,8 +1,10 @@
 package com.martinwalls.presentsorganiser;
 
+import java.util.List;
+
 public class GivenPresent implements Comparable<GivenPresent> {
     private int presentId;
-    private Person recipient;
+    private List<Person> recipientList;
     private int year;
     private String present;
     private String notes;
@@ -21,10 +23,10 @@ public class GivenPresent implements Comparable<GivenPresent> {
         this.isSection = isSection;
     }
 
-    public GivenPresent(int year, Person recipient, String present, String notes,
+    public GivenPresent(int year, List<Person> recipientList, String present, String notes,
                         boolean isBought, boolean isSent) {
         this.year = year;
-        this.recipient = recipient;
+        this.recipientList = recipientList;
         this.present = present;
         this.notes = notes;
         this.isBought = isBought;
@@ -32,11 +34,11 @@ public class GivenPresent implements Comparable<GivenPresent> {
         this.isSection = false;
     }
 
-    public GivenPresent(int year, int presentId, Person recipient, String present, String notes,
+    public GivenPresent(int year, int presentId, List<Person> recipientList, String present, String notes,
                         boolean isBought, boolean isSent) {
         this.year = year;
         this.presentId = presentId;
-        this.recipient = recipient;
+        this.recipientList = recipientList;
         this.present = present;
         this.notes = notes;
         this.isBought = isBought;
@@ -52,12 +54,16 @@ public class GivenPresent implements Comparable<GivenPresent> {
         this.presentId = presentId;
     }
 
-    public Person getRecipient() {
-        return recipient;
+    public List<Person> getRecipientList() {
+        return recipientList;
     }
 
-    public void setRecipient(Person recipient) {
-        this.recipient = recipient;
+    public void setRecipientList(List<Person> recipientList) {
+        this.recipientList = recipientList;
+    }
+
+    public void addRecipient(Person recipient) {
+        this.recipientList.add(recipient);
     }
 
     public int getYear() {
@@ -130,15 +136,15 @@ public class GivenPresent implements Comparable<GivenPresent> {
         return Integer.valueOf(present.getYear()).compareTo(Integer.valueOf(this.getYear()));
     }
 
-    public boolean hasChanged(String newPresent, String newNotes,
+    public boolean isEqual(String newPresent, String newNotes,
                            boolean newBought, boolean newSent) {
-        boolean hasChanged = false;
-        if (!present.equals(newPresent)
-            || !notes.equals(newNotes)
-            || isBought != newBought
-            || isSent != newSent) {
-            hasChanged = true;
+        boolean isEqual = false;
+        if (present.equals(newPresent)
+            && notes.equals(newNotes)
+            && isBought == newBought
+            && isSent == newSent) {
+            isEqual = true;
         }
-        return hasChanged;
+        return isEqual;
     }
 }

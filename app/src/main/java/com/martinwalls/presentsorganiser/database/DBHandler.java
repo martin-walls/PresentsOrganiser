@@ -31,7 +31,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
-    private static int DATABASE_VERSION = 2;
+    private static int DATABASE_VERSION = 3;
     public static String DATABASE_NAME = "presentsDB.db";
 
     private static final String TAG = DBHandler.class.getName();
@@ -53,11 +53,13 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_PERSON_ID = "PersonId";
     private static final String COLUMN_NAME = "FirstName";
 
+    // values for presents-names table
+    private static final String TABLE_GIVEN_PRESENTS_NAMES = "GivenPresents_Names";
+
     // columns for given presents tables
     private static final String TABLE_GIVEN_PRESENTS = "GivenPresents";
     private static final String COLUMN_PRESENT_ID = "PresentId";
     private static final String COLUMN_YEAR = "Year";
-    // COLUMN_PERSON_ID
     private static final String COLUMN_PRESENT = "Present";
     private static final String COLUMN_NOTES = "Notes";
     private static final String COLUMN_BOUGHT = "Bought";
@@ -78,17 +80,14 @@ public class DBHandler extends SQLiteOpenHelper {
 //        db.execSQL(CREATE_TABLE);
 
         // create presents table
-        String CREATE_PRESENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GIVEN_PRESENTS + " (" +
+        String CREATE_GIVEN_PRESENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GIVEN_PRESENTS + " (" +
                 COLUMN_PRESENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_YEAR + " INTEGER, " +
-                COLUMN_PERSON_ID + " INTEGER, " +
                 COLUMN_PRESENT + " TEXT NOT NULL, " +
                 COLUMN_NOTES + " TEXT, " +
                 COLUMN_BOUGHT + " INTEGER, " +      // 1 or 0 for boolean
-                COLUMN_SENT + " INTEGER, " +
-                "FOREIGN KEY (" + COLUMN_PERSON_ID + ") REFERENCES " +
-                TABLE_NAMES + " (" + COLUMN_PERSON_ID + ") )";
-        db.execSQL(CREATE_PRESENTS_TABLE);
+                COLUMN_SENT + " INTEGER )";
+        db.execSQL(CREATE_GIVEN_PRESENTS_TABLE);
 
         // create table of families
         String CREATE_FAMILIES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_FAMILIES + " (" +
@@ -103,6 +102,16 @@ public class DBHandler extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + COLUMN_FAMILY + ") REFERENCES " +
                 TABLE_FAMILIES + " (" + COLUMN_FAMILY + ") )";
         db.execSQL(CREATE_NAMES_TABLE);
+
+        String CREATE_GIVEN_PRESENTS_NAMES = "CREATE TABLE IF NOT EXISTS " + TABLE_GIVEN_PRESENTS_NAMES + " (" +
+                COLUMN_PRESENT_ID + " INTEGER, " +
+                COLUMN_PERSON_ID + " INTEGER, " +
+                " PRIMARY KEY (" + COLUMN_PRESENT_ID + ", " + COLUMN_PERSON_ID + ")," +
+                " FOREIGN KEY (" + COLUMN_PRESENT_ID + ") REFERENCES " +
+                TABLE_GIVEN_PRESENTS + " (" + COLUMN_PRESENT_ID + ") ON DELETE CASCADE ON UPDATE NO ACTION," +
+                " FOREIGN KEY (" + COLUMN_PERSON_ID + ") REFERENCES " +
+                TABLE_NAMES + " (" + COLUMN_PERSON_ID + ") ON DELETE CASCADE ON UPDATE NO ACTION )";
+        db.execSQL(CREATE_GIVEN_PRESENTS_NAMES);
     }
 
     @Override
@@ -116,6 +125,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 String migrationName = String.format("from_%d_to_%d.sql", i, (i + 1));
                 Log.d(TAG, "Looking for migration file: " + migrationName);
                 readAndExecuteSQLScript(db, context, migrationName);
+
             }
         } catch (Exception exception) {
             Log.e(TAG, "Exception running upgrade script:", exception);
@@ -256,9 +266,9 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
             Person person = new Person();
-            person.setId(cursor.getInt(0));
-            person.setName(cursor.getString(1));
-            person.setFamily(cursor.getString(2));
+            person.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID)));
+            person.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+            person.setFamily(cursor.getString(cursor.getColumnIndex(COLUMN_FAMILY)));
             result.add(person);
         }
         cursor.close();
@@ -274,9 +284,9 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
             Person person = new Person();
-            person.setId(cursor.getInt(0));
-            person.setName(cursor.getString(1));
-            person.setFamily(cursor.getString(2));
+            person.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID)));
+            person.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+            person.setFamily(cursor.getString(cursor.getColumnIndex(COLUMN_FAMILY)));
 
             Family family = new Family();
             family.setFamilyName(person.getName());
@@ -317,7 +327,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(queryNamesTable, null);
         if (cursor.moveToFirst()) {
-            String name = cursor.getString(0);
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
             db.delete(TABLE_FAMILIES, COLUMN_FAMILY + "=?", new String[] {name});
             result = true;
         }
@@ -337,22 +347,25 @@ public class DBHandler extends SQLiteOpenHelper {
         List<GivenPresent> presentList = new ArrayList<>();
 //        String tableName = TABLE_TYPE_GIVEN + year;
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
+                " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
                 " WHERE " + COLUMN_PERSON_ID + " = " + person.getId() +
                 " AND " + COLUMN_YEAR + " = " + year;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
-            int presentId = cursor.getInt(0);
+            int presentId = cursor.getInt(cursor.getColumnIndex(COLUMN_PRESENT_ID));
             // column 1 is year
 //            int personId = cursor.getInt(2); //Not necessary
-            String presentName = cursor.getString(3);
-            String notes = cursor.getString(4);
-            boolean isBought = cursor.getInt(5) != 0;
-            boolean isSent = cursor.getInt(6) != 0;
+            String presentName = cursor.getString(cursor.getColumnIndex(COLUMN_PRESENT));
+            String notes = cursor.getString(cursor.getColumnIndex(COLUMN_NOTES));
+            boolean isBought = cursor.getInt(cursor.getColumnIndex(COLUMN_BOUGHT)) != 0;
+            boolean isSent = cursor.getInt(cursor.getColumnIndex(COLUMN_SENT)) != 0;
 
-
+            List<Person> personList = new ArrayList<>();
+            personList.add(person);
             GivenPresent present = new GivenPresent(year, presentId,
-                    person, presentName, notes, isBought, isSent);
+                    personList, presentName, notes, isBought, isSent);
             presentList.add(present);
         }
         cursor.close();
@@ -364,20 +377,23 @@ public class DBHandler extends SQLiteOpenHelper {
     public List<GivenPresent> loadGivenPresents(Person person) {
         List<GivenPresent> presentList = new ArrayList<>();
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
+                " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
                 " WHERE " + COLUMN_PERSON_ID + " = " + person.getId();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
-            int presentId = cursor.getInt(0);
-            int year = cursor.getInt(1);
-            // column 2 is person id
-            String presentName = cursor.getString(3);
-            String notes = cursor.getString(4);
-            boolean isBought = cursor.getInt(5) != 0;
-            boolean isSent = cursor.getInt(6) != 0;
+            int presentId = cursor.getInt(cursor.getColumnIndex(COLUMN_PRESENT_ID));
+            int year = cursor.getInt(cursor.getColumnIndex(COLUMN_YEAR));
+            String presentName = cursor.getString(cursor.getColumnIndex(COLUMN_PRESENT));
+            String notes = cursor.getString(cursor.getColumnIndex(COLUMN_NOTES));
+            boolean isBought = cursor.getInt(cursor.getColumnIndex(COLUMN_BOUGHT)) != 0;
+            boolean isSent = cursor.getInt(cursor.getColumnIndex(COLUMN_SENT)) != 0;
 
+            List<Person> personList = new ArrayList<>();
+            personList.add(person);
             GivenPresent present = new GivenPresent(year, presentId,
-                    person, presentName, notes, isBought, isSent);
+                    personList, presentName, notes, isBought, isSent);
             presentList.add(present);
         }
 
@@ -388,21 +404,31 @@ public class DBHandler extends SQLiteOpenHelper {
     public GivenPresent loadPresent(int presentId) {
         GivenPresent present = new GivenPresent();
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
+                " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
                 " WHERE " + COLUMN_PRESENT_ID + " = " + presentId;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            int year = cursor.getInt(1);
-            int personId = cursor.getInt(2); //Not necessary
-            String presentName = cursor.getString(3);
-            String notes = cursor.getString(4);
-            boolean isBought = cursor.getInt(5) != 0;
-            boolean isSent = cursor.getInt(6) != 0;
+            int year = cursor.getInt(cursor.getColumnIndex(COLUMN_YEAR));
+            int personId = cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID));
+            String presentName = cursor.getString(cursor.getColumnIndex(COLUMN_PRESENT));
+            String notes = cursor.getString(cursor.getColumnIndex(COLUMN_NOTES));
+            boolean isBought = cursor.getInt(cursor.getColumnIndex(COLUMN_BOUGHT)) != 0;
+            boolean isSent = cursor.getInt(cursor.getColumnIndex(COLUMN_SENT)) != 0;
 
             Person person = loadPerson(personId);
+            List<Person> personList = new ArrayList<>();
+            personList.add(person);
 
             present = new GivenPresent(year, presentId,
-                    person, presentName, notes, isBought, isSent);
+                    personList, presentName, notes, isBought, isSent);
+
+            while (cursor.moveToNext()) {
+                int personId1 = cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID));
+                Person person1 = loadPerson(personId1);
+                present.addRecipient(person1);
+            }
         }
         cursor.close();
         db.close();
@@ -414,23 +440,35 @@ public class DBHandler extends SQLiteOpenHelper {
         String columnToGet = presentsToLoad == PendingPresentsActivity.UNBOUGHT ? COLUMN_BOUGHT : COLUMN_SENT;
         int year = Calendar.getInstance().get(Calendar.YEAR);
         String query = "SELECT * FROM " + TABLE_GIVEN_PRESENTS +
-                " WHERE (" + columnToGet + " = 0 OR " + columnToGet + " IS NULL)" +
-            " AND " + COLUMN_YEAR + " = " + year;
+                " INNER JOIN " + TABLE_GIVEN_PRESENTS_NAMES + " ON " +
+                TABLE_GIVEN_PRESENTS + "." + COLUMN_PRESENT_ID + " = " + COLUMN_PRESENT_ID +
+                " WHERE " + columnToGet + " = 0 OR " + columnToGet + " IS NULL" +
+                " AND " + COLUMN_YEAR + " = " + year;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
+        int lastPresentId = 0;
         while (cursor.moveToNext()) {
-            int presentId = cursor.getInt(0);
-            int presentYear = cursor.getInt(1);
-            int personId = cursor.getInt(2);
-            Person person = loadPerson(personId);
-            String presentName = cursor.getString(3);
-            String notes = cursor.getString(4);
-            boolean isBought = cursor.getInt(5) != 0;
-            boolean isSent = cursor.getInt(6) != 0;
+            int presentId = cursor.getInt(cursor.getColumnIndex(COLUMN_PRESENT_ID));
+            if (lastPresentId != presentId) {
+                int presentYear = cursor.getInt(cursor.getColumnIndex(COLUMN_YEAR));
+                String presentName = cursor.getString(cursor.getColumnIndex(COLUMN_PRESENT));
+                String notes = cursor.getString(cursor.getColumnIndex(COLUMN_NOTES));
+                boolean isBought = cursor.getInt(cursor.getColumnIndex(COLUMN_BOUGHT)) != 0;
+                boolean isSent = cursor.getInt(cursor.getColumnIndex(COLUMN_SENT)) != 0;
+                int personId = cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID));
+                Person person = loadPerson(personId);
+                List<Person> personList = new ArrayList<>();
+                personList.add(person);
+                GivenPresent present = new GivenPresent(presentYear, presentId,
+                        personList, presentName, notes, isBought, isSent);
+                presentList.add(present);
+            } else {
+                int personId = cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID));
+                Person person = loadPerson(personId);
+                presentList.get(-1).addRecipient(person);
+            }
 
-            GivenPresent present = new GivenPresent(presentYear, presentId,
-                    person, presentName, notes, isBought, isSent);
-            presentList.add(present);
+            lastPresentId = presentId;
         }
         cursor.close();
         db.close();
@@ -452,8 +490,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 " WHERE " + COLUMN_PERSON_ID + " = " + personId;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            person.setName(cursor.getString(1));
-            person.setFamily(cursor.getString(2));
+            person.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+            person.setFamily(cursor.getString(cursor.getColumnIndex(COLUMN_FAMILY)));
         }
 
         return person;
@@ -467,7 +505,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 " AND " + COLUMN_FAMILY + " = '" + familyName + "'";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            id = cursor.getInt(0);
+            id = cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID));
         }
 
         return id;
@@ -483,9 +521,9 @@ public class DBHandler extends SQLiteOpenHelper {
         // get names
         while (cursor.moveToNext()) {
             Person person = new Person();
-            person.setId(cursor.getInt(0));
-            person.setName(cursor.getString(1));
-            person.setFamily(cursor.getString(2));
+            person.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID)));
+            person.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+            person.setFamily(cursor.getString(cursor.getColumnIndex(COLUMN_FAMILY)));
             result.add(person);
         }
         cursor.close();
@@ -541,19 +579,31 @@ public class DBHandler extends SQLiteOpenHelper {
     // add present for person for year (update row)
     public int addGivenPresentForYear(GivenPresent present) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PERSON_ID, present.getRecipient().getId());
         values.put(COLUMN_YEAR, present.getYear());
         values.put(COLUMN_PRESENT, present.getPresent());
         values.put(COLUMN_NOTES, present.getNotes());
         values.put(COLUMN_BOUGHT, present.isBoughtInt());
         values.put(COLUMN_SENT, present.isSentInt());
         SQLiteDatabase db = this.getWritableDatabase();
-        return (int) db.insert(TABLE_GIVEN_PRESENTS, null, values);
+        int presentId = (int) db.insert(TABLE_GIVEN_PRESENTS, null, values);
+        for (Person person : present.getRecipientList()) {
+            linkPresentToName(presentId, person.getId());
+        }
+        return presentId;
+    }
+
+    public void linkPresentToName(int presentId, int personId) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRESENT_ID, presentId);
+        values.put(COLUMN_PERSON_ID, personId);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_GIVEN_PRESENTS_NAMES, null, values);
     }
 
     public void updateGivenPresentFromYear(GivenPresent present) {
         ContentValues values = new ContentValues();
         // user isn't currently able to change these
+        // change recipient will have to be added with new function to update link table
 //        values.put(COLUMN_PERSON_ID, present.getRecipient().getId());
 //        values.put(COLUMN_YEAR, present.getYear());
         values.put(COLUMN_PRESENT, present.getPresent());
@@ -574,7 +624,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            String id = String.valueOf(cursor.getInt(0));
+            String id = String.valueOf(cursor.getInt(cursor.getColumnIndex(COLUMN_PRESENT_ID)));
             db.delete(TABLE_GIVEN_PRESENTS, COLUMN_PRESENT_ID + "=?", new String[] {id});
             result = true;
         }
@@ -583,16 +633,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return result;
     }
-
-//    private void dropTableIfNoMorePresents(String year) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String tableName = TABLE_TYPE_GIVEN + year;
-//        if (getPresentCountInYear(year) == 0) {
-//            String dropQuery = "DROP TABLE IF EXISTS " + tableName;
-//            db.execSQL(dropQuery);
-//        }
-//        db.close();
-//    }
 
     private void removeGivenPresentsForPerson(Person person) {
         List<GivenPresent> presentList = loadGivenPresents(person);
@@ -617,7 +657,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(queryNamesTable, null);
         if (cursor.moveToFirst()) {
-            String id = cursor.getString(0);
+            String id = cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_ID));
             db.delete(TABLE_NAMES, COLUMN_PERSON_ID + "=?", new String[] {id});
             result = true;
         }
@@ -637,13 +677,16 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // check if present has already been given to person
     public boolean isPresentAlreadyGiven(GivenPresent presentToCheck) {
-        List<GivenPresent> givenPresents = loadGivenPresents(presentToCheck.getRecipient());
-        for (GivenPresent present : givenPresents) {
-            if (present.getPresent().equals(presentToCheck.getPresent())) {
-                // present has already been given
-                return true;
+        for (Person person : presentToCheck.getRecipientList()) {
+            List<GivenPresent> givenPresents = loadGivenPresents(person);
+            for (GivenPresent present : givenPresents) {
+                if (present.getPresent().equals(presentToCheck.getPresent())) {
+                    // present has already been given
+                    return true;
+                }
             }
         }
         return false;
     }
 }
+//TODO adapt rest of code to support multiple people per present etc
