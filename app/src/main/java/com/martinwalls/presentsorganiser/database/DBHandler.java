@@ -459,6 +459,8 @@ public class DBHandler extends SQLiteOpenHelper {
             person.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
             person.setFamily(cursor.getString(cursor.getColumnIndex(COLUMN_FAMILY)));
         }
+        cursor.close();
+        db.close();
 
         return person;
     }
@@ -473,6 +475,8 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             id = cursor.getInt(cursor.getColumnIndex(COLUMN_PERSON_ID));
         }
+        cursor.close();
+        db.close();
 
         return id;
     }
