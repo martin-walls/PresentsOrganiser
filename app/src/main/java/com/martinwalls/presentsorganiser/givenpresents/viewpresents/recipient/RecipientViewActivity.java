@@ -42,6 +42,7 @@ import java.util.List;
 //TODO option to add to family / change family
 //TODO text wrapping names
 
+@Deprecated
 public class RecipientViewActivity extends AppCompatActivity
     // handles positive click on add present dialog
         implements AddPresentDialog.addPresentDialogListener,

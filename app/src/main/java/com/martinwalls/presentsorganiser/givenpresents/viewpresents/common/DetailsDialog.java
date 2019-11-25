@@ -21,6 +21,7 @@ import com.martinwalls.presentsorganiser.database.DBHandler;
 
 import java.util.List;
 
+@Deprecated
 public class DetailsDialog extends DialogFragment {
     DetailsDialogListener listener;
     private GivenPresent present = new GivenPresent();

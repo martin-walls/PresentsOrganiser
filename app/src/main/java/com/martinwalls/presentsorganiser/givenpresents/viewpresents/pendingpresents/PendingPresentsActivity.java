@@ -26,6 +26,7 @@ import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class PendingPresentsActivity extends AppCompatActivity
         implements PendingPresentsAdapter.PendingPresentsAdapterListener,
         DetailsDialog.DetailsDialogListener {

@@ -2,6 +2,7 @@ package com.martinwalls.presentsorganiser;
 
 import java.util.List;
 
+@Deprecated
 public class GivenPresent implements Comparable<GivenPresent> {
     private int presentId;
     private List<Person> recipientList;

@@ -48,6 +48,7 @@ import java.util.List;
 //TODO show list of all presents for year -- possibly new activity?
 //TODO persisting fragment to store sortby name/family
 
+@Deprecated
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NamesAdapter.NamesAdapterListener,

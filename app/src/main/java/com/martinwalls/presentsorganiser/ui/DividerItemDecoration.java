@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.martinwalls.presentsorganiser.R;
 
+@Deprecated
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};

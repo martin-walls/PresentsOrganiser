@@ -42,6 +42,7 @@ import java.util.List;
 //TODO add events to add presents for -- xmas / birthday -- dropdown? -- new db col?
 //TODO group same presents for people
 
+@Deprecated
 public class FamilyViewActivity extends AppCompatActivity
         // handles positive click on add present dialog
         implements AddPresentDialog.addPresentDialogListener,

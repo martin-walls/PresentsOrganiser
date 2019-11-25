@@ -14,6 +14,7 @@ import com.martinwalls.presentsorganiser.R;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.MyViewHolder>
         implements Filterable {
     private final int SECTION_VIEW = 0;

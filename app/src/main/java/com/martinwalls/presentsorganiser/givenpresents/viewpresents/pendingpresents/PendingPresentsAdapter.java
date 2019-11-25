@@ -13,6 +13,7 @@ import com.martinwalls.presentsorganiser.R;
 
 import java.util.List;
 
+@Deprecated
 public class PendingPresentsAdapter extends RecyclerView.Adapter<PendingPresentsAdapter.ItemViewHolder> {
     public static final int SECTION_VIEW = 0;
     public static final int CONTENT_VIEW = 1;

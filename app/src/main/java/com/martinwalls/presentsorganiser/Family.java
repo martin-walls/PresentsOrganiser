@@ -3,6 +3,7 @@ package com.martinwalls.presentsorganiser;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class Family implements Comparable<Family> {
     private String familyName;
     private List<Person> familyMembers = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.martinwalls.presentsorganiser;
 
+@Deprecated
 public class Person implements Comparable<Person> {
     private int id;
     private String name = "";

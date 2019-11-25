@@ -12,6 +12,7 @@ import com.martinwalls.presentsorganiser.R;
 
 import java.util.List;
 
+@Deprecated
 public class FamilyMembersAdapter extends RecyclerView.Adapter<FamilyMembersAdapter.MyViewHolder> {
     private List<Person> members;
     private FamilyMembersAdapterListener listener;

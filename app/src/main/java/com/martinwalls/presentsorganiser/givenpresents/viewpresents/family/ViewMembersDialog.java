@@ -16,6 +16,7 @@ import com.martinwalls.presentsorganiser.Family;
 import com.martinwalls.presentsorganiser.R;
 import com.martinwalls.presentsorganiser.database.DBHandler;
 
+@Deprecated
 public class ViewMembersDialog extends DialogFragment
         implements FamilyMembersAdapter.FamilyMembersAdapterListener {
     private ViewMembersDialogListener listener;
