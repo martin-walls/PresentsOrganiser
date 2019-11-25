@@ -14,10 +14,10 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.martinwalls.presentsorganiser.GivenPresent;
-import com.martinwalls.presentsorganiser.Person;
+import com.martinwalls.presentsorganiser.data.models.GivenPresent;
+import com.martinwalls.presentsorganiser.data.models.Person;
 import com.martinwalls.presentsorganiser.R;
-import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.data.DBHandler;
 
 import java.util.List;
 

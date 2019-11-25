@@ -31,15 +31,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.martinwalls.presentsorganiser.Family;
-import com.martinwalls.presentsorganiser.Person;
+import com.martinwalls.presentsorganiser.data.models.Family;
+import com.martinwalls.presentsorganiser.data.models.Person;
 import com.martinwalls.presentsorganiser.R;
-import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.data.DBHandler;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.family.FamilyViewActivity;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.pendingpresents.PendingPresentsActivity;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.recipient.RecipientViewActivity;
-import com.martinwalls.presentsorganiser.ui.CustomRecyclerView;
-import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
+import com.martinwalls.presentsorganiser.ui.misc.CustomRecyclerView;
+import com.martinwalls.presentsorganiser.ui.misc.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +49,7 @@ import java.util.List;
 //TODO persisting fragment to store sortby name/family
 
 @Deprecated
-public class MainActivity extends AppCompatActivity
+public class MainActivityOLD extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NamesAdapter.NamesAdapterListener,
         FamilyAdapter.FamilyAdapterListener {
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_OLD);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

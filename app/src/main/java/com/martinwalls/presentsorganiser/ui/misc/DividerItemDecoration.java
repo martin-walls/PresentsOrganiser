@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser.ui;
+package com.martinwalls.presentsorganiser.ui.misc;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.martinwalls.presentsorganiser.R;
 
-@Deprecated
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};

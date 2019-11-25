@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser;
+package com.martinwalls.presentsorganiser.data.models;
 
 import java.util.ArrayList;
 import java.util.List;

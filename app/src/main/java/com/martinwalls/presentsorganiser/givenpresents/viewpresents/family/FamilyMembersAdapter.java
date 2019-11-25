@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.martinwalls.presentsorganiser.Family;
-import com.martinwalls.presentsorganiser.Person;
+import com.martinwalls.presentsorganiser.data.models.Family;
+import com.martinwalls.presentsorganiser.data.models.Person;
 import com.martinwalls.presentsorganiser.R;
 
 import java.util.List;

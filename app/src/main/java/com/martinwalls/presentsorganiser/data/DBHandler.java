@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser.database;
+package com.martinwalls.presentsorganiser.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,9 +13,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.martinwalls.presentsorganiser.BuildConfig;
-import com.martinwalls.presentsorganiser.Family;
-import com.martinwalls.presentsorganiser.GivenPresent;
-import com.martinwalls.presentsorganiser.Person;
+import com.martinwalls.presentsorganiser.data.models.Family;
+import com.martinwalls.presentsorganiser.data.models.GivenPresent;
+import com.martinwalls.presentsorganiser.data.models.Person;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.pendingpresents.PendingPresentsActivity;
 
 import java.io.BufferedReader;

@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.martinwalls.presentsorganiser.Family;
+import com.martinwalls.presentsorganiser.data.models.Family;
 import com.martinwalls.presentsorganiser.R;
-import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.data.DBHandler;
 
 @Deprecated
 public class ViewMembersDialog extends DialogFragment
