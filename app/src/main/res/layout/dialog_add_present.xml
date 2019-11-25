@@ -22,7 +22,7 @@
         android:layout_gravity="center_horizontal"
         />
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
@@ -36,9 +36,9 @@
             android:imeOptions="actionNext"
             style="@style/DialogEditText"
             />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
@@ -52,7 +52,7 @@
             android:imeOptions="actionDone"
             style="@style/DialogEditText"
             />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
         android:id="@+id/bought"

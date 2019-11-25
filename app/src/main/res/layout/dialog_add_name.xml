@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_margin"
     >
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/input_name"
@@ -23,9 +23,9 @@
             android:inputType="textCapWords"
             android:imeOptions="actionNext"
             />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/input_name"
@@ -39,6 +39,6 @@
             android:inputType="textCapWords"
             android:imeOptions="actionDone"
             />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
 </RelativeLayout>
