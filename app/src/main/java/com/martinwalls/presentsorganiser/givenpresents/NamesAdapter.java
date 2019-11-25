@@ -8,7 +8,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.martinwalls.presentsorganiser.data.models.Person;
+import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
 
 import java.util.ArrayList;

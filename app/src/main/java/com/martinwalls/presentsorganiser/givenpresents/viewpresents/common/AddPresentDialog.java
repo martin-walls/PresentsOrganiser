@@ -11,10 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
-import com.martinwalls.presentsorganiser.data.models.Family;
-import com.martinwalls.presentsorganiser.data.models.Person;
+import com.martinwalls.presentsorganiser.Family;
+import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
-import com.martinwalls.presentsorganiser.data.DBHandler;
+import com.martinwalls.presentsorganiser.database.DBHandler;
 
 import java.util.ArrayList;
 import java.util.Calendar;

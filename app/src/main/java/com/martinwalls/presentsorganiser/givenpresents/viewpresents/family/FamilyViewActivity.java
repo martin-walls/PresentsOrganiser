@@ -22,18 +22,18 @@ import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.martinwalls.presentsorganiser.data.models.Family;
-import com.martinwalls.presentsorganiser.data.models.GivenPresent;
-import com.martinwalls.presentsorganiser.data.models.Person;
+import com.martinwalls.presentsorganiser.Family;
+import com.martinwalls.presentsorganiser.GivenPresent;
+import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
-import com.martinwalls.presentsorganiser.data.DBHandler;
-import com.martinwalls.presentsorganiser.givenpresents.MainActivityOLD;
+import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.givenpresents.MainActivity;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.AddPresentDialog;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.DetailsDialog;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.GivenPresentsAdapter;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.recipient.RecipientViewActivity;
-import com.martinwalls.presentsorganiser.ui.misc.CustomRecyclerView;
-import com.martinwalls.presentsorganiser.ui.misc.DividerItemDecoration;
+import com.martinwalls.presentsorganiser.ui.CustomRecyclerView;
+import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +68,7 @@ public class FamilyViewActivity extends AppCompatActivity
 
         // load person
         Intent intent = getIntent();
-        String familyName = intent.getStringExtra(MainActivityOLD.FAMILY_NAME);
+        String familyName = intent.getStringExtra(MainActivity.FAMILY_NAME);
         DBHandler dbHandler = new DBHandler(this);
         family = dbHandler.loadFamily(familyName);
         getSupportActionBar().setTitle(family.getFamilyName());
@@ -389,7 +389,7 @@ public class FamilyViewActivity extends AppCompatActivity
         int recipientId = dbHandler.loadPersonId(name, family.getFamilyName());
 
         Intent intent = new Intent(this, RecipientViewActivity.class);
-        intent.putExtra(MainActivityOLD.RECIPIENT_ID, recipientId);
+        intent.putExtra(MainActivity.RECIPIENT_ID, recipientId);
         startActivity(intent);
     }
 }

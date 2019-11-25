@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser.data.models;
+package com.martinwalls.presentsorganiser;
 
 @Deprecated
 public class Person implements Comparable<Person> {

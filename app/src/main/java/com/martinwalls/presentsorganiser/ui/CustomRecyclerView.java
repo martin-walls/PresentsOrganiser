@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser.ui.misc;
+package com.martinwalls.presentsorganiser.ui;
 
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
