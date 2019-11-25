@@ -14,7 +14,7 @@ import android.widget.NumberPicker;
 import com.martinwalls.presentsorganiser.Family;
 import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
-import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.data.DBHandler;
 
 import java.util.ArrayList;
 import java.util.Calendar;

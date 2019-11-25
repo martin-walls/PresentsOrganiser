@@ -34,7 +34,7 @@ import android.widget.Toast;
 import com.martinwalls.presentsorganiser.Family;
 import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
-import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.data.DBHandler;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.family.FamilyViewActivity;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.pendingpresents.PendingPresentsActivity;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.recipient.RecipientViewActivity;

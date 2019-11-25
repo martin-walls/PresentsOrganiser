@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser.database;
+package com.martinwalls.presentsorganiser.data;
 
 import android.content.ContentValues;
 import android.content.Context;

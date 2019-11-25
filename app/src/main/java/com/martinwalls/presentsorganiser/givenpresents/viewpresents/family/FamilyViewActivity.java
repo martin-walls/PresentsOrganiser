@@ -26,7 +26,7 @@ import com.martinwalls.presentsorganiser.Family;
 import com.martinwalls.presentsorganiser.GivenPresent;
 import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
-import com.martinwalls.presentsorganiser.database.DBHandler;
+import com.martinwalls.presentsorganiser.data.DBHandler;
 import com.martinwalls.presentsorganiser.givenpresents.MainActivity;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.AddPresentDialog;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.DetailsDialog;
