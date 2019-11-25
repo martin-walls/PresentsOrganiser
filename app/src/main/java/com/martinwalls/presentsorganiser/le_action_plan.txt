@@ -1,0 +1,5 @@
+TODO
+ - migrate db to Room, with ViewModels to get data from Activities
+ - overhaul UI
+   - KISS, get rid of screens that are very similar
+   - probably get rid of nav drawer, maybe bottom navigation, or maybe dont need it at all
