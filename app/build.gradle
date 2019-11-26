@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.martinwalls.presentsorganiser"
-        minSdkVersion 21
+        minSdkVersion 26 //todo work out how low i can make this go and still work
         targetSdkVersion 29
         versionCode 4
         versionName "1.0.3"
