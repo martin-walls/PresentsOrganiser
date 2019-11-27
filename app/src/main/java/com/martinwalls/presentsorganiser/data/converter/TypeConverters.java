@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser.data;
+package com.martinwalls.presentsorganiser.data.converter;
 
 import androidx.room.TypeConverter;
 
