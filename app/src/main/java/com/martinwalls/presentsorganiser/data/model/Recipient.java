@@ -1,11 +1,16 @@
-package com.martinwalls.presentsorganiser.data;
+package com.martinwalls.presentsorganiser.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "recipients")
+@Entity(tableName = "recipients",
+        foreignKeys = @ForeignKey(entity = Group.class,
+                parentColumns = "id",
+                childColumns = "group_id",
+                onDelete = ForeignKey.RESTRICT))
 public class Recipient {
 
     @PrimaryKey

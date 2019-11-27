@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser.data;
+package com.martinwalls.presentsorganiser.data.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
