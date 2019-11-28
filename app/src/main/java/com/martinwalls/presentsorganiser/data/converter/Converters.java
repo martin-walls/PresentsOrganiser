@@ -4,7 +4,7 @@ import androidx.room.TypeConverter;
 
 import java.time.LocalDate;
 
-public class TypeConverters {
+public class Converters {
 
     @TypeConverter
     public static String fromDate(LocalDate dateTime) {

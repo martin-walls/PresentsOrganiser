@@ -5,17 +5,21 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
+import com.martinwalls.presentsorganiser.data.converter.Converters;
 import com.martinwalls.presentsorganiser.data.dao.GiftDao;
 import com.martinwalls.presentsorganiser.data.dao.GroupDao;
 import com.martinwalls.presentsorganiser.data.dao.OccasionDao;
 import com.martinwalls.presentsorganiser.data.dao.PresentDao;
 import com.martinwalls.presentsorganiser.data.dao.RecipientDao;
 import com.martinwalls.presentsorganiser.data.model.Gift;
+import com.martinwalls.presentsorganiser.data.model.GiftTagJoin;
 import com.martinwalls.presentsorganiser.data.model.Group;
 import com.martinwalls.presentsorganiser.data.model.Occasion;
 import com.martinwalls.presentsorganiser.data.model.Present;
 import com.martinwalls.presentsorganiser.data.model.Recipient;
+import com.martinwalls.presentsorganiser.data.model.Tag;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,8 +29,11 @@ import java.util.concurrent.Executors;
         Group.class,
         Gift.class,
         Present.class,
-        Occasion.class
+        Occasion.class,
+        Tag.class,
+        GiftTagJoin.class
 }, version = 1)
+@TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "presents_db";
