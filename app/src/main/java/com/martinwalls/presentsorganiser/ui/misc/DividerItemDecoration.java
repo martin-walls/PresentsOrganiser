@@ -1,4 +1,4 @@
-package com.martinwalls.presentsorganiser.ui;
+package com.martinwalls.presentsorganiser.ui.misc;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.martinwalls.presentsorganiser.R;
 
-@Deprecated
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
@@ -18,7 +17,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable divider;
 
     /**
-     * Default divider will be used
+     * Default divider will be used.
      */
     public DividerItemDecoration(Context context) {
         final TypedArray styledAttributes = context.obtainStyledAttributes(ATTRS);
@@ -27,7 +26,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
-     * Custom divider will be used
+     * Custom divider will be used.
      */
     public DividerItemDecoration(Context context, int resId) {
         divider = ContextCompat.getDrawable(context, resId);

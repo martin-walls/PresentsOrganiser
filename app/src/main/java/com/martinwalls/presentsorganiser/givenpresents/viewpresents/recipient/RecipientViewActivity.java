@@ -31,8 +31,8 @@ import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.AddPr
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.DetailsDialog;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.GivenPresentsAdapter;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.family.FamilyViewActivity;
-import com.martinwalls.presentsorganiser.ui.CustomRecyclerView;
-import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
+import com.martinwalls.presentsorganiser.ui.misc.CustomRecyclerView;
+import com.martinwalls.presentsorganiser.ui.misc.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;

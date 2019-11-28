@@ -38,8 +38,8 @@ import com.martinwalls.presentsorganiser.data.DBHandler;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.family.FamilyViewActivity;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.pendingpresents.PendingPresentsActivity;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.recipient.RecipientViewActivity;
-import com.martinwalls.presentsorganiser.ui.CustomRecyclerView;
-import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
+import com.martinwalls.presentsorganiser.ui.misc.CustomRecyclerView;
+import com.martinwalls.presentsorganiser.ui.misc.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;

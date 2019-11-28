@@ -20,8 +20,8 @@ import com.martinwalls.presentsorganiser.GivenPresent;
 import com.martinwalls.presentsorganiser.R;
 import com.martinwalls.presentsorganiser.data.DBHandler;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.DetailsDialog;
-import com.martinwalls.presentsorganiser.ui.CustomRecyclerView;
-import com.martinwalls.presentsorganiser.ui.DividerItemDecoration;
+import com.martinwalls.presentsorganiser.ui.misc.CustomRecyclerView;
+import com.martinwalls.presentsorganiser.ui.misc.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
