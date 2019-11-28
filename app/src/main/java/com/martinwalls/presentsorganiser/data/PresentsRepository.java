@@ -8,6 +8,7 @@ import com.martinwalls.presentsorganiser.data.dao.OccasionDao;
 import com.martinwalls.presentsorganiser.data.dao.PresentDao;
 import com.martinwalls.presentsorganiser.data.dao.RecipientDao;
 
+//todo remove this, don't need it
 public class PresentsRepository {
 
     private RecipientDao recipientDao;
