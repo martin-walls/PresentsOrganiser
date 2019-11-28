@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:showIn="@layout/app_bar_main"
+    tools:context=".ui.MainFragment"
+    android:orientation="vertical"
     >
 
     <com.martinwalls.presentsorganiser.ui.misc.CustomRecyclerView
-        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical"
         android:overScrollMode="never"
+        android:id="@+id/recycler_view"
         />
 
-    <!-- View to show if no presents in db for person -->
     <TextView
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:text="@string/no_names"
+        android:gravity="center"
+        android:text="no data"
         style="@style/EmptyListView"
         />
 
-</RelativeLayout>
+</LinearLayout>

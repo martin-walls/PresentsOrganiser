@@ -49,7 +49,7 @@ import java.util.List;
 //TODO persisting fragment to store sortby name/family
 
 @Deprecated
-public class MainActivity extends AppCompatActivity
+public class MainActivityOLD extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NamesAdapter.NamesAdapterListener,
         FamilyAdapter.FamilyAdapterListener {
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_old);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

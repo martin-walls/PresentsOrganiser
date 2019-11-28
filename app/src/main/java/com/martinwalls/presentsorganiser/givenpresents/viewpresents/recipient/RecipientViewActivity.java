@@ -26,7 +26,7 @@ import com.martinwalls.presentsorganiser.GivenPresent;
 import com.martinwalls.presentsorganiser.Person;
 import com.martinwalls.presentsorganiser.R;
 import com.martinwalls.presentsorganiser.data.DBHandler;
-import com.martinwalls.presentsorganiser.givenpresents.MainActivity;
+import com.martinwalls.presentsorganiser.givenpresents.MainActivityOLD;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.AddPresentDialog;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.DetailsDialog;
 import com.martinwalls.presentsorganiser.givenpresents.viewpresents.common.GivenPresentsAdapter;
@@ -67,7 +67,7 @@ public class RecipientViewActivity extends AppCompatActivity
 
         // load person
         Intent intent = getIntent();
-        int recipientId = intent.getIntExtra(MainActivity.RECIPIENT_ID, -1);
+        int recipientId = intent.getIntExtra(MainActivityOLD.RECIPIENT_ID, -1);
         DBHandler dbHandler = new DBHandler(this);
         recipient = dbHandler.loadPerson(recipientId);
         getSupportActionBar().setTitle(recipient.getName());
@@ -145,7 +145,7 @@ public class RecipientViewActivity extends AppCompatActivity
 
     private void gotoFamily() {
         Intent intent = new Intent(this, FamilyViewActivity.class);
-        intent.putExtra(MainActivity.FAMILY_NAME, recipient.getFamily());
+        intent.putExtra(MainActivityOLD.FAMILY_NAME, recipient.getFamily());
         startActivity(intent);
     }
 
