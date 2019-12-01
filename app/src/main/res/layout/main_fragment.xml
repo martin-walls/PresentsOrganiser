@@ -6,24 +6,27 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainFragment"
     android:orientation="vertical"
+    tools:context=".ui.MainFragment"
     >
 
     <com.martinwalls.presentsorganiser.ui.misc.CustomRecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
         android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_recipient"
         />
 
     <TextView
         android:id="@+id/empty"
+        style="@style/EmptyListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="no data"
-        style="@style/EmptyListView"
+        android:visibility="gone"
         />
 
 </LinearLayout>

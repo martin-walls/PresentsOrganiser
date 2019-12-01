@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TagTextView">
+        <attr name="tagColor" format="reference|color" />
+        <attr name="tagPaddingVertical" format="dimension" />
+        <attr name="tagPaddingHorizontal" format="dimension" />
+    </declare-styleable>
+</resources>
